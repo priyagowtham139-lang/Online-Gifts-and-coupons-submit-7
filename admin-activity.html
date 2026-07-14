@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Activity Log</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .act-hero { background: linear-gradient(135deg, #1e293b, #334155); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; animation: fadeInUp 0.4s ease-out; position: relative; overflow: hidden; }
+    .act-hero::before { content: ''; position: absolute; top: -40%; right: -10%; width: 250px; height: 250px; background: rgba(99,102,241,0.1); border-radius: 50%; }
+    .act-hero h2 { font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .act-hero p { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 4px; }
+    .act-hero-btn { padding: 9px 20px; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; z-index: 1; }
+    .act-hero-btn:hover { background: rgba(255,255,255,0.2); }
+    .act-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .act-stat { padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; text-align: center; transition: all 0.25s; }
+    .act-stat:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .act-stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; margin: 0 auto 8px; }
+    .act-stat .count { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+    .act-stat .label { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+    .act-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+    .act-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .act-filter { padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; font-weight: 500; color: var(--text-muted); background: var(--bg); cursor: pointer; transition: all 0.2s; }
+    .act-filter:hover { border-color: var(--primary); color: var(--primary); }
+    .act-filter.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .act-search { padding: 8px 14px 8px 36px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.82rem; background: var(--bg); color: var(--text); width: 220px; transition: border-color 0.2s; }
+    .act-search:focus { border-color: var(--primary); outline: none; }
+    .act-search-wrap { position: relative; }
+    .act-search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem; }
+    .act-timeline { position: relative; padding-left: 32px; margin-bottom: 24px; }
+    .act-timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: var(--border); border-radius: 2px; }
+    .act-date-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; margin-top: 8px; position: relative; }
+    .act-date-label::before { content: ''; position: absolute; left: -28px; top: 50%; transform: translateY(-50%); width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--bg); }
+    .act-entry { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; display: flex; gap: 14px; align-items: flex-start; transition: all 0.3s; animation: fadeInUp 0.4s ease-out backwards; position: relative; }
+    .act-entry::before { content: ''; position: absolute; left: -26px; top: 18px; width: 8px; height: 8px; border-radius: 50%; background: var(--border); border: 2px solid var(--bg-card); }
+    .act-entry:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.04); border-color: var(--primary); }
+    .act-entry-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+    .act-entry-body { flex: 1; }
+    .act-entry-body p { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
+    .act-entry-body p strong { font-weight: 600; }
+    .act-entry-meta { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .act-entry-time { font-size: 0.7rem; color: var(--text-muted); }
+    .act-entry-tag { font-size: 0.62rem; padding: 2px 8px; border-radius: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+    .act-entry-tag.product { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .act-entry-tag.coupon { background: rgba(236,72,153,0.1); color: #ec4899; }
+    .act-entry-tag.order { background: rgba(16,185,129,0.1); color: #10b981; }
+    .act-entry-tag.user { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .act-entry-tag.system { background: rgba(107,114,128,0.1); color: #6b7280; }
+    .act-entry-tag.report { background: rgba(59,130,246,0.1); color: #3b82f6; }
+    @media (max-width: 768px) { .act-stats { grid-template-columns: repeat(2, 1fr); } .act-toolbar { flex-direction: column; align-items: stretch; } .act-search { width: 100%; } }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html"><i class="fas fa-tag"></i> Coupons</a>
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html" class="active"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Activity Log</h2>
+          <p>Track all admin actions and system events</p>
+        </div>
+        <div class="dash-avatar admin-avatar">AD</div>
+      </div>
+      <div class="act-hero">
+        <div>
+          <h2>12 actions performed today</h2>
+          <p>Last activity was 25 minutes ago</p>
+        </div>
+        <button class="act-hero-btn" onclick="window.location.href='404.html'"><i class="fas fa-download"></i> Export Log</button>
+      </div>
+      <div class="act-stats">
+        <div class="act-stat" style="animation: fadeInUp 0.4s ease-out 0.05s backwards;">
+          <div class="act-stat-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-list"></i></div>
+          <div class="count">148</div>
+          <div class="label">Total Actions</div>
+        </div>
+        <div class="act-stat" style="animation: fadeInUp 0.4s ease-out 0.1s backwards;">
+          <div class="act-stat-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-box"></i></div>
+          <div class="count">32</div>
+          <div class="label">Product Changes</div>
+        </div>
+        <div class="act-stat" style="animation: fadeInUp 0.4s ease-out 0.15s backwards;">
+          <div class="act-stat-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-users-cog"></i></div>
+          <div class="count">18</div>
+          <div class="label">User Actions</div>
+        </div>
+        <div class="act-stat" style="animation: fadeInUp 0.4s ease-out 0.2s backwards;">
+          <div class="act-stat-icon" style="background: rgba(239,68,68,0.1); color: #ef4444;"><i class="fas fa-shield-alt"></i></div>
+          <div class="count">5</div>
+          <div class="label">Security Events</div>
+        </div>
+      </div>
+      <div class="act-toolbar">
+        <div class="act-filters">
+          <span class="act-filter active">All</span>
+          <span class="act-filter">Products</span>
+          <span class="act-filter">Orders</span>
+          <span class="act-filter">Users</span>
+          <span class="act-filter">System</span>
+        </div>
+        <div class="act-search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" class="act-search" placeholder="Search activity...">
+        </div>
+      </div>
+      <div class="act-timeline">
+        <div class="act-date-label">Today</div>
+        <div class="act-entry" style="animation-delay: 0.05s;">
+          <div class="act-entry-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-plus-circle"></i></div>
+          <div class="act-entry-body">
+            <p>Added new product <strong>"Festival Hamper Premium"</strong></p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 9:15 AM</span>
+              <span class="act-entry-tag product">Product</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-entry" style="animation-delay: 0.1s;">
+          <div class="act-entry-icon" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="fas fa-tag"></i></div>
+          <div class="act-entry-body">
+            <p>Created coupon code <strong>VIP50</strong> with 50% discount</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 8:30 AM</span>
+              <span class="act-entry-tag coupon">Coupon</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-entry" style="animation-delay: 0.15s;">
+          <div class="act-entry-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-truck"></i></div>
+          <div class="act-entry-body">
+            <p>Updated shipping status for order <strong>#GH-1040</strong> to Shipped</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 7:45 AM</span>
+              <span class="act-entry-tag order">Order</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-date-label">Yesterday</div>
+        <div class="act-entry" style="animation-delay: 0.2s;">
+          <div class="act-entry-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-user-check"></i></div>
+          <div class="act-entry-body">
+            <p>Approved seller application for <strong>"CraftHaven"</strong></p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 4:30 PM</span>
+              <span class="act-entry-tag user">User</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-entry" style="animation-delay: 0.25s;">
+          <div class="act-entry-icon" style="background: rgba(107,114,128,0.1); color: #6b7280;"><i class="fas fa-cog"></i></div>
+          <div class="act-entry-body">
+            <p>Updated store settings - shipping policy revised</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 2:15 PM</span>
+              <span class="act-entry-tag system">System</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-date-label">July 7, 2026</div>
+        <div class="act-entry" style="animation-delay: 0.3s;">
+          <div class="act-entry-icon" style="background: rgba(59,130,246,0.1); color: #3b82f6;"><i class="fas fa-chart-bar"></i></div>
+          <div class="act-entry-body">
+            <p>Generated monthly sales report for <strong>June 2026</strong></p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 10:00 AM</span>
+              <span class="act-entry-tag report">Report</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-date-label">July 6, 2026</div>
+        <div class="act-entry" style="animation-delay: 0.35s;">
+          <div class="act-entry-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-edit"></i></div>
+          <div class="act-entry-body">
+            <p>Updated product details for <strong>"Spa Gift Set"</strong> - price changed to &#8377;849</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 3:20 PM</span>
+              <span class="act-entry-tag product">Product</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-date-label">June 28, 2026</div>
+        <div class="act-entry" style="animation-delay: 0.4s;">
+          <div class="act-entry-icon" style="background: rgba(239,68,68,0.1); color: #ef4444;"><i class="fas fa-ban"></i></div>
+          <div class="act-entry-body">
+            <p>Blocked user account <strong>james.brown@gmail.com</strong> - policy violation</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 11:00 AM</span>
+              <span class="act-entry-tag user">User</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-entry" style="animation-delay: 0.45s;">
+          <div class="act-entry-icon" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="fas fa-clock"></i></div>
+          <div class="act-entry-body">
+            <p>Coupon code <strong>FREESHIP</strong> marked as expiring soon</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 9:00 AM</span>
+              <span class="act-entry-tag coupon">Coupon</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-date-label">June 22, 2026</div>
+        <div class="act-entry" style="animation-delay: 0.5s;">
+          <div class="act-entry-icon" style="background: rgba(59,130,246,0.1); color: #3b82f6;"><i class="fas fa-file-pdf"></i></div>
+          <div class="act-entry-body">
+            <p>Exported PDF report - <strong>Q2 2026 Revenue Summary</strong></p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 5:00 PM</span>
+              <span class="act-entry-tag report">Report</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-date-label">June 20, 2026</div>
+        <div class="act-entry" style="animation-delay: 0.55s;">
+          <div class="act-entry-icon" style="background: rgba(107,114,128,0.1); color: #6b7280;"><i class="fas fa-database"></i></div>
+          <div class="act-entry-body">
+            <p>System backup completed - <strong>12.4 GB</strong> (Database + Assets)</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 3:00 AM</span>
+              <span class="act-entry-tag system">System</span>
+            </div>
+          </div>
+        </div>
+        <div class="act-entry" style="animation-delay: 0.6s;">
+          <div class="act-entry-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-undo"></i></div>
+          <div class="act-entry-body">
+            <p>Processed refund for order <strong>#GH-1037</strong> - &#8377;1,599</p>
+            <div class="act-entry-meta">
+              <span class="act-entry-time"><i class="far fa-clock"></i> 11:30 AM</span>
+              <span class="act-entry-tag order">Order</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>document.querySelectorAll('.act-filter').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.act-filter').forEach(t=>t.classList.remove('active'));b.classList.add('active')})})</script>
+</body>
+</html>

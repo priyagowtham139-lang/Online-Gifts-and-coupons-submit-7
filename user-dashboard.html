@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - User Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Mobile Top Bar -->
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+
+  <!-- Overlay -->
+  <div class="dash-overlay" id="dashOverlay"></div>
+
+  <div class="dash-body">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html" class="active"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dash-main">
+
+      <!-- Overview Section -->
+      <section id="overview">
+        <div class="dash-topbar">
+          <div>
+            <h2>Welcome back, Sarah!</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Here's what's happening with your account</p>
+          </div>
+          <div class="dash-topbar-right">
+            <div class="dash-avatar">SJ</div>
+          </div>
+        </div>
+
+        <div class="dash-stats">
+          <div class="dash-stat-card">
+            <div class="stat-icon blue"><i class="fas fa-shopping-bag"></i></div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-value">9</div>
+            <div class="stat-label">Delivered</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="stat-icon pink"><i class="fas fa-heart"></i></div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Wishlist Items</div>
+          </div>
+        </div>
+
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+          <div class="dash-quick-links">
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-gift"></i> Browse Gifts</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-tag"></i> View Coupons</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-box"></i> Track Order</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-heart"></i> My Wishlist</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-cog"></i> Settings</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-headset"></i> Get Support</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Orders Section -->
+      <section id="orders">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-box"></i> Recent Orders</div>
+          <div class="dash-card">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Item</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Order ID">#GH-1042</td>
+                  <td data-label="Item">Birthday Hamper Deluxe</td>
+                  <td data-label="Date">Jul 8, 2026</td>
+                  <td data-label="Amount">&#8377;1,299</td>
+                  <td data-label="Status"><span class="dash-badge delivered">Delivered</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Order ID">#GH-1038</td>
+                  <td data-label="Item">Anniversary Rose Bouquet</td>
+                  <td data-label="Date">Jul 5, 2026</td>
+                  <td data-label="Amount">&#8377;899</td>
+                  <td data-label="Status"><span class="dash-badge processing">In Transit</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Order ID">#GH-1035</td>
+                  <td data-label="Item">Personalized Photo Frame</td>
+                  <td data-label="Date">Jul 2, 2026</td>
+                  <td data-label="Amount">&#8377;599</td>
+                  <td data-label="Status"><span class="dash-badge delivered">Delivered</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Order ID">#GH-1030</td>
+                  <td data-label="Item">Wedding Gift Set</td>
+                  <td data-label="Date">Jun 28, 2026</td>
+                  <td data-label="Amount">&#8377;2,499</td>
+                  <td data-label="Status"><span class="dash-badge pending">Pending</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Order ID">#GH-1025</td>
+                  <td data-label="Item">Kids Surprise Box</td>
+                  <td data-label="Date">Jun 20, 2026</td>
+                  <td data-label="Amount">&#8377;749</td>
+                  <td data-label="Status"><span class="dash-badge delivered">Delivered</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Wishlist Section -->
+      <section id="wishlist">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-heart"></i> My Wishlist</div>
+          <div class="dash-wishlist-grid">
+            <div class="dash-wishlist-item">
+              <div class="item-icon"><i class="fas fa-spa"></i></div>
+              <h4>Spa Gift Set</h4>
+              <p>&#8377;1,199</p>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="item-icon"><i class="fas fa-gift"></i></div>
+              <h4>Gourmet Chocolate Box</h4>
+              <p>&#8377;599</p>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="item-icon"><i class="fas fa-gem"></i></div>
+              <h4>Diamond Earrings</h4>
+              <p>&#8377;4,999</p>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="item-icon"><i class="fas fa-volume-up"></i></div>
+              <h4>Bluetooth Speaker</h4>
+              <p>&#8377;1,899</p>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="item-icon"><i class="fas fa-book-open"></i></div>
+              <h4>Book Collection</h4>
+              <p>&#8377;799</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coupons Section -->
+      <section id="coupons">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-tag"></i> My Coupons</div>
+          <div class="dash-card">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Discount</th>
+                  <th>Expires</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Code"><strong>WELCOME20</strong></td>
+                  <td data-label="Discount">20% Off</td>
+                  <td data-label="Expires">Aug 31, 2026</td>
+                  <td data-label="Status"><span class="dash-badge delivered">Active</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Code"><strong>FESTIVE15</strong></td>
+                  <td data-label="Discount">15% Off</td>
+                  <td data-label="Expires">Jul 31, 2026</td>
+                  <td data-label="Status"><span class="dash-badge delivered">Active</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Code"><strong>FREESHIP</strong></td>
+                  <td data-label="Discount">Free Shipping</td>
+                  <td data-label="Expires">Jul 15, 2026</td>
+                  <td data-label="Status"><span class="dash-badge pending">Expiring Soon</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Code"><strong>BDAY50</strong></td>
+                  <td data-label="Discount">&#8377;50 Off</td>
+                  <td data-label="Expires">Jun 30, 2026</td>
+                  <td data-label="Status"><span class="dash-badge cancelled">Expired</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Section -->
+      <section id="profile">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-user-circle"></i> My Profile</div>
+          <div class="dash-card">
+            <div class="dash-profile-card">
+              <div class="dash-profile-avatar">SJ</div>
+              <div class="dash-profile-info">
+                <h3>Sarah Johnson</h3>
+                <p>sarah.johnson@gmail.com</p>
+                <p class="member-since"><i class="fas fa-calendar-alt"></i> Member since January 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Addresses Section -->
+      <section id="addresses">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-map-marker-alt"></i> Saved Addresses</div>
+          <div class="dash-card">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+              <div style="padding: 16px; border: 1px solid var(--border); border-radius: 12px;">
+                <strong style="color: var(--primary);">Home</strong>
+                <p style="font-size: 0.88rem; color: var(--text); margin-top: 8px;">123 Maple Street,<br>Fairlands, Salem - 636356,<br>Tamil Nadu</p>
+              </div>
+              <div style="padding: 16px; border: 1px solid var(--border); border-radius: 12px;">
+                <strong style="color: var(--text-muted);">Office</strong>
+                <p style="font-size: 0.88rem; color: var(--text); margin-top: 8px;">456 Tech Park,<br>GST Road, Salem - 636030,<br>Tamil Nadu</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payments Section -->
+      <section id="payments">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-credit-card"></i> Payment Methods</div>
+          <div class="dash-card">
+            <table class="dash-table">
+              <thead>
+                <tr><th>Card</th><th>Type</th><th>Expires</th><th>Default</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Card"><i class="fab fa-cc-visa" style="font-size: 1.4rem; color: #1a1f71;"></i> **** **** **** 4521</td>
+                  <td data-label="Type">Visa</td>
+                  <td data-label="Expires">09/28</td>
+                  <td data-label="Default"><span class="dash-badge delivered">Default</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Card"><i class="fab fa-cc-mastercard" style="font-size: 1.4rem; color: #eb001b;"></i> **** **** **** 7832</td>
+                  <td data-label="Type">Mastercard</td>
+                  <td data-label="Expires">03/27</td>
+                  <td data-label="Default"><span class="dash-badge pending">-</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notifications Section -->
+      <section id="notifications">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-bell"></i> Notifications</div>
+          <div class="dash-card">
+            <ul class="dash-activity-list">
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <div>Your order #GH-1042 has been delivered successfully.
+                  <span class="activity-time">2 hours ago</span>
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-tag"></i>
+                <div>New coupon FESTIVE15 is now available for you.
+                  <span class="activity-time">1 day ago</span>
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-shipping-fast"></i>
+                <div>Your order #GH-1038 is on the way!
+                  <span class="activity-time">2 days ago</span>
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-gift"></i>
+                <div>Birthday coming up! Check out our special collection.
+                  <span class="activity-time">5 days ago</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Help Center Section -->
+      <section id="help">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-question-circle"></i> Help Center</div>
+          <div class="dash-card">
+            <ul class="dash-activity-list">
+              <li><i class="fas fa-shipping-fast"></i><div><strong>Shipping Policy</strong><br>Free shipping on orders above &#8377;999. Standard delivery in 3-5 business days.</div></li>
+              <li><i class="fas fa-undo"></i><div><strong>Returns & Refunds</strong><br>Easy returns within 7 days of delivery. Refund processed in 3-5 business days.</div></li>
+              <li><i class="fas fa-lock"></i><div><strong>Secure Payments</strong><br>All transactions are encrypted and 100% secure.</div></li>
+              <li><i class="fas fa-headset"></i><div><strong>Contact Support</strong><br>Reach us at 9976527238 or email hello@gifthaven.com</div></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity Log Section -->
+      <section id="activity">
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-history"></i> Activity Log</div>
+          <div class="dash-card">
+            <ul class="dash-activity-list">
+              <li><i class="fas fa-sign-in-alt"></i><div>Logged in from Chrome on Windows<span class="activity-time">Today, 10:30 AM</span></div></li>
+              <li><i class="fas fa-shopping-bag"></i><div>Placed order #GH-1042<span class="activity-time">Jul 8, 2026</span></div></li>
+              <li><i class="fas fa-heart"></i><div>Added "Spa Gift Set" to wishlist<span class="activity-time">Jul 6, 2026</span></div></li>
+              <li><i class="fas fa-tag"></i><div>Redeemed coupon WELCOME20<span class="activity-time">Jul 3, 2026</span></div></li>
+              <li><i class="fas fa-user-edit"></i><div>Updated profile information<span class="activity-time">Jun 28, 2026</span></div></li>
+              <li><i class="fas fa-credit-card"></i><div>Added new payment method<span class="activity-time">Jun 15, 2026</span></div></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>

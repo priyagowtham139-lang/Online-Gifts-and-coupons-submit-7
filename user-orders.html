@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - My Orders</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .order-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .order-stat {
+      padding: 18px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .order-stat:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.04); }
+    .order-stat-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .order-stat .count { font-size: 1.5rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .order-stat .label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .order-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .order-tab {
+      padding: 7px 16px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .order-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .order-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .order-tab .tab-count { font-size: 0.7rem; margin-left: 3px; opacity: 0.8; }
+    .order-filter-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .order-search {
+      flex: 1;
+      min-width: 220px;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      background: var(--bg);
+      color: var(--text);
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .order-search:focus { border-color: var(--primary); outline: none; }
+    .order-search-wrap { position: relative; flex: 1; min-width: 220px; }
+    .order-search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.85rem; }
+    .order-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      animation: fadeInUp 0.4s ease-out backwards;
+    }
+    .order-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.05); transform: translateY(-2px); }
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .order-card-id { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .order-card-date { font-size: 0.78rem; color: var(--text-muted); }
+    .order-card-status {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-delivered { background: rgba(16,185,129,0.1); color: #10b981; }
+    .status-transit { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .status-pending { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .status-cancelled { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .order-card-body { padding: 16px 20px; display: flex; gap: 16px; align-items: center; }
+    .order-card-img {
+      width: 70px; height: 70px;
+      border-radius: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .order-card-info { flex: 1; }
+    .order-card-item { font-weight: 600; font-size: 0.92rem; color: var(--text); margin-bottom: 4px; }
+    .order-card-meta { font-size: 0.78rem; color: var(--text-muted); display: flex; gap: 16px; flex-wrap: wrap; }
+    .order-card-meta span { display: flex; align-items: center; gap: 4px; }
+    .order-card-price { text-align: right; }
+    .order-card-price .amount { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .order-card-price .qty { font-size: 0.75rem; color: var(--text-muted); }
+    .order-card-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .order-btn {
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-muted);
+    }
+    .order-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .order-btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .order-btn.primary:hover { opacity: 0.9; }
+    .order-progress {
+      padding: 0 20px 16px;
+    }
+    .order-progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin-top: 8px;
+    }
+    .order-progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 24px;
+      right: 24px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      z-index: 0;
+    }
+    .order-progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 1;
+    }
+    .order-progress-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      transition: all 0.3s;
+    }
+    .order-progress-step.done .order-progress-dot {
+      background: #10b981;
+      border-color: #10b981;
+      color: #fff;
+    }
+    .order-progress-step.active .order-progress-dot {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      animation: pulse 2s infinite;
+    }
+    .order-progress-label { font-size: 0.65rem; color: var(--text-muted); font-weight: 500; }
+    .order-progress-step.done .order-progress-label,
+    .order-progress-step.active .order-progress-label { color: var(--text); font-weight: 600; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 0 6px rgba(99,102,241,0); } }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html" class="active"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>My Orders</h2>
+          <p>Track and manage all your orders</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="order-stats">
+        <div class="order-stat" style="animation: fadeInUp 0.4s ease-out 0.05s backwards;">
+          <div class="order-stat-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-shopping-bag"></i></div>
+          <div>
+            <div class="count">12</div>
+            <div class="label">Total Orders</div>
+          </div>
+        </div>
+        <div class="order-stat" style="animation: fadeInUp 0.4s ease-out 0.1s backwards;">
+          <div class="order-stat-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-check-circle"></i></div>
+          <div>
+            <div class="count">7</div>
+            <div class="label">Delivered</div>
+          </div>
+        </div>
+        <div class="order-stat" style="animation: fadeInUp 0.4s ease-out 0.15s backwards;">
+          <div class="order-stat-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-truck"></i></div>
+          <div>
+            <div class="count">3</div>
+            <div class="label">In Transit</div>
+          </div>
+        </div>
+        <div class="order-stat" style="animation: fadeInUp 0.4s ease-out 0.2s backwards;">
+          <div class="order-stat-icon" style="background: rgba(239,68,68,0.1); color: #ef4444;"><i class="fas fa-times-circle"></i></div>
+          <div>
+            <div class="count">2</div>
+            <div class="label">Cancelled</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="order-tabs">
+        <span class="order-tab active">All <span class="tab-count">(12)</span></span>
+        <span class="order-tab">Delivered <span class="tab-count">(7)</span></span>
+        <span class="order-tab">In Transit <span class="tab-count">(3)</span></span>
+        <span class="order-tab">Pending <span class="tab-count">(0)</span></span>
+        <span class="order-tab">Cancelled <span class="tab-count">(2)</span></span>
+      </div>
+
+      <!-- Search -->
+      <div class="order-filter-bar">
+        <div class="order-search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" class="order-search" placeholder="Search by order ID or item name..." style="padding-left: 40px;">
+        </div>
+      </div>
+
+      <!-- Order Card 1 -->
+      <div class="order-card" style="animation-delay: 0.05s;">
+        <div class="order-card-header">
+          <div>
+            <span class="order-card-id">#GH-1042</span>
+            <span class="order-card-date" style="margin-left: 12px;">Placed on Jul 8, 2026</span>
+          </div>
+          <span class="order-card-status status-delivered"><i class="fas fa-check-circle"></i> Delivered</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-card-img" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="fas fa-gift"></i></div>
+          <div class="order-card-info">
+            <div class="order-card-item">Birthday Hamper Deluxe</div>
+            <div class="order-card-meta">
+              <span><i class="fas fa-hashtag"></i> 1 item</span>
+              <span><i class="far fa-calendar"></i> Jul 8, 2026</span>
+              <span><i class="fas fa-map-marker-alt"></i> Salem</span>
+            </div>
+          </div>
+          <div class="order-card-price">
+            <div class="amount">&#8377;1,299</div>
+            <div class="qty">Qty: 1</div>
+          </div>
+        </div>
+        <div class="order-progress">
+          <div class="order-progress-bar">
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Placed</span>
+            </div>
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Confirmed</span>
+            </div>
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Shipped</span>
+            </div>
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Delivered</span>
+            </div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-receipt"></i> Invoice</button>
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-redo"></i> Reorder</button>
+          <button class="order-btn primary" onclick="window.location.href='404.html'"><i class="fas fa-star"></i> Rate & Review</button>
+        </div>
+      </div>
+
+      <!-- Order Card 2 -->
+      <div class="order-card" style="animation-delay: 0.1s;">
+        <div class="order-card-header">
+          <div>
+            <span class="order-card-id">#GH-1041</span>
+            <span class="order-card-date" style="margin-left: 12px;">Placed on Jul 7, 2026</span>
+          </div>
+          <span class="order-card-status status-transit"><i class="fas fa-truck"></i> In Transit</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-card-img" style="background: rgba(139,92,246,0.1); color: #8b5cf6;"><i class="fas fa-spa"></i></div>
+          <div class="order-card-info">
+            <div class="order-card-item">Lavender Aroma Gift Set</div>
+            <div class="order-card-meta">
+              <span><i class="fas fa-hashtag"></i> 1 item</span>
+              <span><i class="far fa-calendar"></i> Jul 7, 2026</span>
+              <span><i class="fas fa-map-marker-alt"></i> Salem</span>
+            </div>
+          </div>
+          <div class="order-card-price">
+            <div class="amount">&#8377;1,849</div>
+            <div class="qty">Qty: 1</div>
+          </div>
+        </div>
+        <div class="order-progress">
+          <div class="order-progress-bar">
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Placed</span>
+            </div>
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Confirmed</span>
+            </div>
+            <div class="order-progress-step active">
+              <div class="order-progress-dot"><i class="fas fa-truck"></i></div>
+              <span class="order-progress-label">Shipped</span>
+            </div>
+            <div class="order-progress-step">
+              <div class="order-progress-dot"><i class="fas fa-home"></i></div>
+              <span class="order-progress-label">Delivered</span>
+            </div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-receipt"></i> Invoice</button>
+          <button class="order-btn primary" onclick="window.location.href='404.html'"><i class="fas fa-map-marker-alt"></i> Track Order</button>
+        </div>
+      </div>
+
+      <!-- Order Card 3 -->
+      <div class="order-card" style="animation-delay: 0.15s;">
+        <div class="order-card-header">
+          <div>
+            <span class="order-card-id">#GH-1040</span>
+            <span class="order-card-date" style="margin-left: 12px;">Placed on Jul 6, 2026</span>
+          </div>
+          <span class="order-card-status status-transit"><i class="fas fa-truck"></i> In Transit</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-card-img" style="background: rgba(59,130,246,0.1); color: #3b82f6;"><i class="fas fa-mug-hot"></i></div>
+          <div class="order-card-info">
+            <div class="order-card-item">Customized Photo Mug Set</div>
+            <div class="order-card-meta">
+              <span><i class="fas fa-hashtag"></i> 1 item</span>
+              <span><i class="far fa-calendar"></i> Jul 6, 2026</span>
+              <span><i class="fas fa-map-marker-alt"></i> Salem</span>
+            </div>
+          </div>
+          <div class="order-card-price">
+            <div class="amount">&#8377;449</div>
+            <div class="qty">Qty: 1</div>
+          </div>
+        </div>
+        <div class="order-progress">
+          <div class="order-progress-bar">
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Placed</span>
+            </div>
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Confirmed</span>
+            </div>
+            <div class="order-progress-step active">
+              <div class="order-progress-dot"><i class="fas fa-truck"></i></div>
+              <span class="order-progress-label">Shipped</span>
+            </div>
+            <div class="order-progress-step">
+              <div class="order-progress-dot"><i class="fas fa-home"></i></div>
+              <span class="order-progress-label">Delivered</span>
+            </div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-receipt"></i> Invoice</button>
+          <button class="order-btn primary" onclick="window.location.href='404.html'"><i class="fas fa-map-marker-alt"></i> Track Order</button>
+        </div>
+      </div>
+
+      <!-- Order Card 4 -->
+      <div class="order-card" style="animation-delay: 0.2s;">
+        <div class="order-card-header">
+          <div>
+            <span class="order-card-id">#GH-1038</span>
+            <span class="order-card-date" style="margin-left: 12px;">Placed on Jul 5, 2026</span>
+          </div>
+          <span class="order-card-status status-transit"><i class="fas fa-truck"></i> In Transit</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-card-img" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="fas fa-seedling"></i></div>
+          <div class="order-card-info">
+            <div class="order-card-item">Anniversary Rose Bouquet</div>
+            <div class="order-card-meta">
+              <span><i class="fas fa-hashtag"></i> 1 item</span>
+              <span><i class="far fa-calendar"></i> Jul 5, 2026</span>
+              <span><i class="fas fa-map-marker-alt"></i> Salem</span>
+            </div>
+          </div>
+          <div class="order-card-price">
+            <div class="amount">&#8377;899</div>
+            <div class="qty">Qty: 1</div>
+          </div>
+        </div>
+        <div class="order-progress">
+          <div class="order-progress-bar">
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Placed</span>
+            </div>
+            <div class="order-progress-step done">
+              <div class="order-progress-dot"><i class="fas fa-check"></i></div>
+              <span class="order-progress-label">Confirmed</span>
+            </div>
+            <div class="order-progress-step active">
+              <div class="order-progress-dot"><i class="fas fa-truck"></i></div>
+              <span class="order-progress-label">Shipped</span>
+            </div>
+            <div class="order-progress-step">
+              <div class="order-progress-dot"><i class="fas fa-home"></i></div>
+              <span class="order-progress-label">Delivered</span>
+            </div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-receipt"></i> Invoice</button>
+          <button class="order-btn primary" onclick="window.location.href='404.html'"><i class="fas fa-map-marker-alt"></i> Track Order</button>
+        </div>
+      </div>
+
+      <!-- Order Card 5 - Delivered -->
+      <div class="order-card" style="animation-delay: 0.25s;">
+        <div class="order-card-header">
+          <div>
+            <span class="order-card-id">#GH-1035</span>
+            <span class="order-card-date" style="margin-left: 12px;">Placed on Jul 2, 2026</span>
+          </div>
+          <span class="order-card-status status-delivered"><i class="fas fa-check-circle"></i> Delivered</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-card-img" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-camera"></i></div>
+          <div class="order-card-info">
+            <div class="order-card-item">Personalized Photo Frame</div>
+            <div class="order-card-meta">
+              <span><i class="fas fa-hashtag"></i> 1 item</span>
+              <span><i class="far fa-calendar"></i> Jul 2, 2026</span>
+              <span><i class="fas fa-map-marker-alt"></i> Salem</span>
+            </div>
+          </div>
+          <div class="order-card-price">
+            <div class="amount">&#8377;599</div>
+            <div class="qty">Qty: 1</div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-receipt"></i> Invoice</button>
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-redo"></i> Reorder</button>
+          <button class="order-btn primary" onclick="window.location.href='404.html'"><i class="fas fa-star"></i> Rate & Review</button>
+        </div>
+      </div>
+
+      <!-- Order Card 6 -->
+      <div class="order-card" style="animation-delay: 0.3s;">
+        <div class="order-card-header">
+          <div>
+            <span class="order-card-id">#GH-1032</span>
+            <span class="order-card-date" style="margin-left: 12px;">Placed on Jun 30, 2026</span>
+          </div>
+          <span class="order-card-status status-delivered"><i class="fas fa-check-circle"></i> Delivered</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-card-img" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-candy-cane"></i></div>
+          <div class="order-card-info">
+            <div class="order-card-item">Premium Chocolate Hamper</div>
+            <div class="order-card-meta">
+              <span><i class="fas fa-hashtag"></i> 2 items</span>
+              <span><i class="far fa-calendar"></i> Jun 30, 2026</span>
+              <span><i class="fas fa-map-marker-alt"></i> Salem</span>
+            </div>
+          </div>
+          <div class="order-card-price">
+            <div class="amount">&#8377;1,999</div>
+            <div class="qty">Qty: 1</div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-receipt"></i> Invoice</button>
+          <button class="order-btn" onclick="window.location.href='404.html'"><i class="fas fa-redo"></i> Reorder</button>
+          <button class="order-btn primary" onclick="window.location.href='404.html'"><i class="fas fa-star"></i> Rate & Review</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>
+    document.querySelectorAll('.order-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.order-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

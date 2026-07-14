@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Payment Methods</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html" class="active"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Payment Methods</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Manage your saved cards and payment options</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+      <div class="dash-content">
+        <section>
+          <h2 class="dash-section-title"><i class="fas fa-credit-card"></i> Saved Payment Methods</h2>
+          <div class="dash-table-wrapper">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Card / Account</th>
+                  <th>Type</th>
+                  <th>Expires</th>
+                  <th>Default</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Card / Account"><i class="fab fa-cc-visa"></i> ****4521</td>
+                  <td data-label="Type">Visa</td>
+                  <td data-label="Expires">09/28</td>
+                  <td data-label="Default"><span class="dash-badge dash-badge-primary">Default</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Card / Account"><i class="fab fa-cc-mastercard"></i> ****7832</td>
+                  <td data-label="Type">Mastercard</td>
+                  <td data-label="Expires">03/27</td>
+                  <td data-label="Default">-</td>
+                </tr>
+                <tr>
+                  <td data-label="Card / Account"><i class="fab fa-cc-jcb"></i> ****1234</td>
+                  <td data-label="Type">RuPay</td>
+                  <td data-label="Expires">12/26</td>
+                  <td data-label="Default">-</td>
+                </tr>
+                <tr>
+                  <td data-label="Card / Account"><i class="fas fa-mobile-alt"></i> sarah@upi</td>
+                  <td data-label="Type">UPI</td>
+                  <td data-label="Expires">-</td>
+                  <td data-label="Default">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section>
+          <h2 class="dash-section-title"><i class="fas fa-shield-alt"></i> Security Info</h2>
+          <div class="dash-security-card">
+            <div class="dash-security-icon"><i class="fas fa-lock"></i></div>
+            <div class="dash-security-info">
+              <h4>Payment Security</h4>
+              <p>All transactions are secured with 256-bit SSL encryption. Your payment details are never shared with third parties and are stored in compliance with PCI DSS standards.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

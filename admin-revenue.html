@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Revenue Analytics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .rev-hero { background: linear-gradient(135deg, #059669, #10b981); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; animation: fadeInUp 0.4s ease-out; position: relative; overflow: hidden; }
+    .rev-hero::before { content: ''; position: absolute; top: -40%; right: -10%; width: 250px; height: 250px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+    .rev-hero-stat { text-align: center; z-index: 1; }
+    .rev-hero-stat .val { font-size: 1.6rem; font-weight: 800; color: #fff; }
+    .rev-hero-stat .lbl { font-size: 0.72rem; color: rgba(255,255,255,0.7); margin-top: 4px; }
+    .rev-hero-stat .change { font-size: 0.7rem; font-weight: 600; margin-top: 4px; }
+    .rev-hero-stat .change.up { color: #d1fae5; }
+    .rev-hero-stat .change.down { color: #fecaca; }
+    .rev-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .rev-tab { padding: 7px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); background: var(--bg); cursor: pointer; transition: all 0.2s; }
+    .rev-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .rev-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .rev-chart { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 20px; animation: fadeInUp 0.4s ease-out 0.1s backwards; }
+    .rev-chart h3 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 20px; }
+    .rev-bars { display: flex; align-items: flex-end; gap: 12px; height: 180px; padding: 0 10px; }
+    .rev-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
+    .rev-bar-val { font-size: 0.68rem; font-weight: 600; color: var(--text-muted); }
+    .rev-bar { width: 100%; max-width: 48px; border-radius: 6px 6px 0 0; transition: height 1s ease; cursor: pointer; position: relative; }
+    .rev-bar:hover { opacity: 0.85; }
+    .rev-bar-lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+    .rev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .rev-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; animation: fadeInUp 0.4s ease-out backwards; }
+    .rev-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .rev-card h3 i { color: var(--primary); font-size: 0.85rem; }
+    .rev-cat-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .rev-cat-row:last-child { border-bottom: none; }
+    .rev-cat-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .rev-cat-info { flex: 1; }
+    .rev-cat-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .rev-cat-bar { height: 6px; background: var(--bg); border-radius: 3px; margin-top: 4px; overflow: hidden; }
+    .rev-cat-fill { height: 100%; border-radius: 3px; }
+    .rev-cat-val { font-size: 0.78rem; font-weight: 700; color: var(--text); text-align: right; min-width: 60px; }
+    .rev-cat-pct { font-size: 0.68rem; color: var(--text-muted); text-align: right; }
+    .rev-top-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .rev-top-row:last-child { border-bottom: none; }
+    .rev-top-rank { width: 26px; height: 26px; border-radius: 6px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); flex-shrink: 0; }
+    .rev-top-rank.gold { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .rev-top-info { flex: 1; }
+    .rev-top-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .rev-top-sub { font-size: 0.7rem; color: var(--text-muted); }
+    .rev-top-val { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+    @media (max-width: 768px) { .rev-hero { grid-template-columns: repeat(2, 1fr); } .rev-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html"><i class="fas fa-tag"></i> Coupons</a>
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html" class="active"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Revenue Analytics</h2>
+          <p>Track your store performance and growth</p>
+        </div>
+        <div class="dash-avatar admin-avatar">AD</div>
+      </div>
+      <div class="rev-hero">
+        <div class="rev-hero-stat"><div class="val">&#8377;2,84,500</div><div class="lbl">This Month</div><div class="change up"><i class="fas fa-arrow-up"></i> +15.9%</div></div>
+        <div class="rev-hero-stat"><div class="val">&#8377;2,45,300</div><div class="lbl">Last Month</div></div>
+        <div class="rev-hero-stat"><div class="val">&#8377;8,45,600</div><div class="lbl">This Quarter</div><div class="change up"><i class="fas fa-arrow-up"></i> +22.3%</div></div>
+        <div class="rev-hero-stat"><div class="val">&#8377;832</div><div class="lbl">Avg. Order Value</div></div>
+      </div>
+      <div class="rev-tabs">
+        <span class="rev-tab active">This Week</span>
+        <span class="rev-tab">This Month</span>
+        <span class="rev-tab">This Quarter</span>
+        <span class="rev-tab">This Year</span>
+      </div>
+      <div class="rev-chart">
+        <h3><i class="fas fa-chart-bar"></i> Weekly Revenue Breakdown</h3>
+        <div class="rev-bars">
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;45K</span><div class="rev-bar" style="height: 60%; background: linear-gradient(180deg, #6366f1, #818cf8);"></div><span class="rev-bar-lbl">Mon</span></div>
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;62K</span><div class="rev-bar" style="height: 80%; background: linear-gradient(180deg, #6366f1, #818cf8);"></div><span class="rev-bar-lbl">Tue</span></div>
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;54K</span><div class="rev-bar" style="height: 70%; background: linear-gradient(180deg, #6366f1, #818cf8);"></div><span class="rev-bar-lbl">Wed</span></div>
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;71K</span><div class="rev-bar" style="height: 92%; background: linear-gradient(180deg, #10b981, #34d399);"></div><span class="rev-bar-lbl">Thu</span></div>
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;58K</span><div class="rev-bar" style="height: 75%; background: linear-gradient(180deg, #6366f1, #818cf8);"></div><span class="rev-bar-lbl">Fri</span></div>
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;66K</span><div class="rev-bar" style="height: 85%; background: linear-gradient(180deg, #6366f1, #818cf8);"></div><span class="rev-bar-lbl">Sat</span></div>
+          <div class="rev-bar-col"><span class="rev-bar-val">&#8377;48K</span><div class="rev-bar" style="height: 62%; background: linear-gradient(180deg, #6366f1, #818cf8);"></div><span class="rev-bar-lbl">Sun</span></div>
+        </div>
+      </div>
+      <div class="rev-grid">
+        <div class="rev-card" style="animation-delay: 0.15s;">
+          <h3><i class="fas fa-layer-group"></i> Revenue by Category</h3>
+          <div class="rev-cat-row">
+            <div class="rev-cat-icon" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="fas fa-birthday-cake"></i></div>
+            <div class="rev-cat-info"><div class="rev-cat-name">Birthday</div><div class="rev-cat-bar"><div class="rev-cat-fill" style="width: 32%; background: #ec4899;"></div></div></div>
+            <div><div class="rev-cat-val">&#8377;1,25,000</div><div class="rev-cat-pct">32%</div></div>
+          </div>
+          <div class="rev-cat-row">
+            <div class="rev-cat-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-heart"></i></div>
+            <div class="rev-cat-info"><div class="rev-cat-name">Anniversary</div><div class="rev-cat-bar"><div class="rev-cat-fill" style="width: 25%; background: #6366f1;"></div></div></div>
+            <div><div class="rev-cat-val">&#8377;98,500</div><div class="rev-cat-pct">25%</div></div>
+          </div>
+          <div class="rev-cat-row">
+            <div class="rev-cat-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-gem"></i></div>
+            <div class="rev-cat-info"><div class="rev-cat-name">Wedding</div><div class="rev-cat-bar"><div class="rev-cat-fill" style="width: 22%; background: #f59e0b;"></div></div></div>
+            <div><div class="rev-cat-val">&#8377;85,000</div><div class="rev-cat-pct">22%</div></div>
+          </div>
+          <div class="rev-cat-row">
+            <div class="rev-cat-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-gift"></i></div>
+            <div class="rev-cat-info"><div class="rev-cat-name">Festival</div><div class="rev-cat-bar"><div class="rev-cat-fill" style="width: 21%; background: #10b981;"></div></div></div>
+            <div><div class="rev-cat-val">&#8377;76,000</div><div class="rev-cat-pct">21%</div></div>
+          </div>
+        </div>
+        <div class="rev-card" style="animation-delay: 0.2s;">
+          <h3><i class="fas fa-trophy"></i> Top Selling Products</h3>
+          <div class="rev-top-row">
+            <div class="rev-top-rank gold">1</div>
+            <div class="rev-top-info"><div class="rev-top-name">Gourmet Chocolate Box</div><div class="rev-top-sub">234 sold</div></div>
+            <div class="rev-top-val">&#8377;1,40,166</div>
+          </div>
+          <div class="rev-top-row">
+            <div class="rev-top-rank gold">2</div>
+            <div class="rev-top-info"><div class="rev-top-name">Personalized Photo Frame</div><div class="rev-top-sub">198 sold</div></div>
+            <div class="rev-top-val">&#8377;1,18,602</div>
+          </div>
+          <div class="rev-top-row">
+            <div class="rev-top-rank gold">3</div>
+            <div class="rev-top-info"><div class="rev-top-name">Birthday Hamper Deluxe</div><div class="rev-top-sub">156 sold</div></div>
+            <div class="rev-top-val">&#8377;2,02,644</div>
+          </div>
+          <div class="rev-top-row">
+            <div class="rev-top-rank">4</div>
+            <div class="rev-top-info"><div class="rev-top-name">Spa Gift Set</div><div class="rev-top-sub">112 sold</div></div>
+            <div class="rev-top-val">&#8377;95,088</div>
+          </div>
+          <div class="rev-top-row">
+            <div class="rev-top-rank">5</div>
+            <div class="rev-top-info"><div class="rev-top-name">Diamond Earrings</div><div class="rev-top-sub">89 sold</div></div>
+            <div class="rev-top-val">&#8377;4,44,911</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>document.querySelectorAll('.rev-tab').forEach(t=>{t.addEventListener('click',()=>{document.querySelectorAll('.rev-tab').forEach(x=>x.classList.remove('active'));t.classList.add('active')})})</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Store Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .set-tabs { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+    .set-tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); background: var(--bg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+    .set-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .set-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .set-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 16px; overflow: hidden; animation: fadeInUp 0.4s ease-out backwards; }
+    .set-section-header { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.2s; }
+    .set-section-header:hover { background: var(--bg); }
+    .set-section-left { display: flex; align-items: center; gap: 14px; }
+    .set-section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .set-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .set-section-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .set-section-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; }
+    .set-section-badge.active { background: rgba(16,185,129,0.1); color: #10b981; }
+    .set-section-body { padding: 0 22px 20px; border-top: 1px solid var(--border); }
+    .set-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .set-row:last-child { border-bottom: none; }
+    .set-row-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+    .set-row-value { font-size: 0.82rem; color: var(--text); font-weight: 600; text-align: right; }
+    .set-row-value.editable { color: var(--primary); cursor: pointer; }
+    .set-row-value.editable:hover { text-decoration: underline; }
+    .set-check-list { list-style: none; padding: 0; margin: 0; }
+    .set-check-list li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .set-check-list li:last-child { border-bottom: none; }
+    .set-check-list li i { color: #10b981; font-size: 0.75rem; }
+    .set-save-btn { padding: 10px 24px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .set-save-btn:hover { opacity: 0.9; }
+    .set-bottom { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
+    .set-reset-btn { padding: 10px 24px; background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); border-radius: 8px; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .set-reset-btn:hover { border-color: var(--primary); color: var(--primary); }
+    @media (max-width: 768px) { .set-row { flex-direction: column; align-items: flex-start; gap: 4px; } .set-row-value { text-align: left; } }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html"><i class="fas fa-tag"></i> Coupons</a>
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html" class="active"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Store Settings</h2>
+          <p>Configure your store details and policies</p>
+        </div>
+        <div class="dash-avatar admin-avatar">AD</div>
+      </div>
+      <div class="set-tabs">
+        <span class="set-tab active"><i class="fas fa-store"></i> General</span>
+        <span class="set-tab"><i class="fas fa-truck"></i> Shipping</span>
+        <span class="set-tab"><i class="fas fa-undo"></i> Returns</span>
+        <span class="set-tab"><i class="fas fa-credit-card"></i> Payments</span>
+        <span class="set-tab"><i class="fas fa-shield-alt"></i> Security</span>
+      </div>
+
+      <div class="set-section" style="animation-delay: 0.05s;">
+        <div class="set-section-header">
+          <div class="set-section-left">
+            <div class="set-section-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-store"></i></div>
+            <div><div class="set-section-title">General Information</div><div class="set-section-sub">Store name, address, and contact</div></div>
+          </div>
+          <span class="set-section-badge active">Active</span>
+        </div>
+        <div class="set-section-body">
+          <div class="set-row"><span class="set-row-label">Store Name</span><span class="set-row-value editable" onclick="window.location.href='404.html'">GiftHaven Online Gifts &amp; Coupons</span></div>
+          <div class="set-row"><span class="set-row-label">Address</span><span class="set-row-value editable" onclick="window.location.href='404.html'">Fairlands, Alagapuram, Salem - 636356</span></div>
+          <div class="set-row"><span class="set-row-label">Phone</span><span class="set-row-value editable" onclick="window.location.href='404.html'">+91 9976527238</span></div>
+          <div class="set-row"><span class="set-row-label">Email</span><span class="set-row-value editable" onclick="window.location.href='404.html'">hello@gifthaven.com</span></div>
+          <div class="set-row"><span class="set-row-label">GSTIN</span><span class="set-row-value">33ABCDE1234F1Z5</span></div>
+        </div>
+      </div>
+
+      <div class="set-section" style="animation-delay: 0.1s;">
+        <div class="set-section-header">
+          <div class="set-section-left">
+            <div class="set-section-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-clock"></i></div>
+            <div><div class="set-section-title">Business Hours</div><div class="set-section-sub">Operating schedule for customer support</div></div>
+          </div>
+          <span class="set-section-badge active">Configured</span>
+        </div>
+        <div class="set-section-body">
+          <div class="set-row"><span class="set-row-label">Monday - Saturday</span><span class="set-row-value">9:00 AM - 9:00 PM</span></div>
+          <div class="set-row"><span class="set-row-label">Sunday</span><span class="set-row-value">10:00 AM - 6:00 PM</span></div>
+          <div class="set-row"><span class="set-row-label">Public Holidays</span><span class="set-row-value">10:00 AM - 4:00 PM</span></div>
+        </div>
+      </div>
+
+      <div class="set-section" style="animation-delay: 0.15s;">
+        <div class="set-section-header">
+          <div class="set-section-left">
+            <div class="set-section-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-truck"></i></div>
+            <div><div class="set-section-title">Shipping Policy</div><div class="set-section-sub">Delivery options and pricing</div></div>
+          </div>
+          <span class="set-section-badge active">4 Options</span>
+        </div>
+        <div class="set-section-body">
+          <div class="set-row"><span class="set-row-label">Free Shipping</span><span class="set-row-value">Orders above &#8377;999</span></div>
+          <div class="set-row"><span class="set-row-label">Standard Delivery</span><span class="set-row-value">3-5 business days (&#8377;99)</span></div>
+          <div class="set-row"><span class="set-row-label">Express Delivery</span><span class="set-row-value">1-2 business days (&#8377;249)</span></div>
+          <div class="set-row"><span class="set-row-label">International</span><span class="set-row-value">7-14 business days</span></div>
+        </div>
+      </div>
+
+      <div class="set-section" style="animation-delay: 0.2s;">
+        <div class="set-section-header">
+          <div class="set-section-left">
+            <div class="set-section-icon" style="background: rgba(139,92,246,0.1); color: #8b5cf6;"><i class="fas fa-undo"></i></div>
+            <div><div class="set-section-title">Return Policy</div><div class="set-section-sub">Refund and return conditions</div></div>
+          </div>
+          <span class="set-section-badge active">7 Days</span>
+        </div>
+        <div class="set-section-body">
+          <div class="set-row"><span class="set-row-label">Return Window</span><span class="set-row-value">7 days from delivery</span></div>
+          <div class="set-row"><span class="set-row-label">Refund Method</span><span class="set-row-value">Original payment method</span></div>
+          <div class="set-row"><span class="set-row-label">Condition</span><span class="set-row-value">Unused with original packaging</span></div>
+          <div class="set-row"><span class="set-row-label">Pickup</span><span class="set-row-value">Free for defective items</span></div>
+        </div>
+      </div>
+
+      <div class="set-section" style="animation-delay: 0.25s;">
+        <div class="set-section-header">
+          <div class="set-section-left">
+            <div class="set-section-icon" style="background: rgba(59,130,246,0.1); color: #3b82f6;"><i class="fas fa-credit-card"></i></div>
+            <div><div class="set-section-title">Payment Methods</div><div class="set-section-sub">Accepted payment options</div></div>
+          </div>
+          <span class="set-section-badge active">5 Active</span>
+        </div>
+        <div class="set-section-body">
+          <ul class="set-check-list">
+            <li><i class="fas fa-check-circle"></i> UPI (Google Pay, PhonePe, Paytm)</li>
+            <li><i class="fas fa-check-circle"></i> Credit / Debit Cards (Visa, Mastercard, RuPay)</li>
+            <li><i class="fas fa-check-circle"></i> Net Banking (All Major Banks)</li>
+            <li><i class="fas fa-check-circle"></i> Cash on Delivery (COD)</li>
+            <li><i class="fas fa-check-circle"></i> EMI Options (Bajaj Finserv, HDFC, ICICI)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="set-section" style="animation-delay: 0.3s;">
+        <div class="set-section-header">
+          <div class="set-section-left">
+            <div class="set-section-icon" style="background: rgba(239,68,68,0.1); color: #ef4444;"><i class="fas fa-shield-alt"></i></div>
+            <div><div class="set-section-title">Security &amp; Compliance</div><div class="set-section-sub">Data protection and certifications</div></div>
+          </div>
+          <span class="set-section-badge active">All Clear</span>
+        </div>
+        <div class="set-section-body">
+          <ul class="set-check-list">
+            <li><i class="fas fa-check-circle"></i> SSL Encryption (256-bit) - Active</li>
+            <li><i class="fas fa-check-circle"></i> PCI DSS Compliant - Certified</li>
+            <li><i class="fas fa-check-circle"></i> Two-Factor Authentication (2FA) - Enabled</li>
+            <li><i class="fas fa-check-circle"></i> GDPR &amp; Data Protection - Compliant</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="set-bottom">
+        <button class="set-reset-btn" onclick="window.location.href='404.html'">Reset to Default</button>
+        <button class="set-save-btn" onclick="window.location.href='404.html'">Save Changes</button>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>document.querySelectorAll('.set-tab').forEach(t=>{t.addEventListener('click',()=>{document.querySelectorAll('.set-tab').forEach(x=>x.classList.remove('active'));t.classList.add('active')})})</script>
+</body>
+</html>

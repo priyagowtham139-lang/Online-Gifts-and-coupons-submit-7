@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Activity Log</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .activity-filters { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .activity-filter {
+      padding: 7px 16px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .activity-filter:hover { border-color: var(--primary); color: var(--primary); }
+    .activity-filter.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .activity-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .activity-summary-item {
+      padding: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s;
+    }
+    .activity-summary-item:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .activity-summary-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .activity-summary-item .count { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+    .activity-summary-item .label { font-size: 0.72rem; color: var(--text-muted); }
+    .timeline-date { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; margin-top: 8px; padding-left: 20px; }
+    .timeline-group { position: relative; padding-left: 28px; margin-bottom: 28px; }
+    .timeline-group::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      display: flex;
+      gap: 16px;
+      padding: 14px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      transition: all 0.3s;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: var(--bg);
+      z-index: 1;
+    }
+    .timeline-item:hover {
+      transform: translateX(6px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      border-color: var(--primary);
+    }
+    .timeline-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .timeline-icon.login { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .timeline-icon.order { background: rgba(16,185,129,0.1); color: #10b981; }
+    .timeline-icon.wishlist { background: rgba(236,72,153,0.1); color: #ec4899; }
+    .timeline-icon.coupon { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .timeline-icon.profile { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+    .timeline-icon.payment { background: rgba(59,130,246,0.1); color: #3b82f6; }
+    .timeline-icon.security { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .timeline-icon.review { background: rgba(234,179,8,0.1); color: #eab308; }
+    .timeline-icon.settings { background: rgba(107,114,128,0.1); color: #6b7280; }
+    .timeline-body { flex: 1; }
+    .timeline-body p { font-size: 0.88rem; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+    .timeline-body p strong { font-weight: 600; }
+    .timeline-meta { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+    .timeline-time { font-size: 0.73rem; color: var(--text-muted); font-weight: 500; }
+    .timeline-badge {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .timeline-badge.login { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .timeline-badge.order { background: rgba(16,185,129,0.1); color: #10b981; }
+    .timeline-badge.wishlist { background: rgba(236,72,153,0.1); color: #ec4899; }
+    .timeline-badge.coupon { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .timeline-badge.profile { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+    .timeline-badge.payment { background: rgba(59,130,246,0.1); color: #3b82f6; }
+    .timeline-badge.security { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .timeline-badge.review { background: rgba(234,179,8,0.1); color: #eab308; }
+    .timeline-badge.settings { background: rgba(107,114,128,0.1); color: #6b7280; }
+    .activity-export {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .activity-export:hover { border-color: var(--primary); color: var(--primary); }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html" class="active"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Activity Log</h2>
+          <p>Track all your account activity and changes</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="activity-summary">
+        <div class="activity-summary-item">
+          <div class="activity-summary-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-list"></i></div>
+          <div>
+            <div class="count">14</div>
+            <div class="label">Total Activities</div>
+          </div>
+        </div>
+        <div class="activity-summary-item">
+          <div class="activity-summary-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-box"></i></div>
+          <div>
+            <div class="count">3</div>
+            <div class="label">Orders Placed</div>
+          </div>
+        </div>
+        <div class="activity-summary-item">
+          <div class="activity-summary-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-sign-in-alt"></i></div>
+          <div>
+            <div class="count">4</div>
+            <div class="label">Logins</div>
+          </div>
+        </div>
+        <div class="activity-summary-item">
+          <div class="activity-summary-icon" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="fas fa-heart"></i></div>
+          <div>
+            <div class="count">2</div>
+            <div class="label">Wishlist Adds</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Export -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
+        <div class="activity-filters">
+          <span class="activity-filter active">All</span>
+          <span class="activity-filter">Logins</span>
+          <span class="activity-filter">Orders</span>
+          <span class="activity-filter">Wishlist</span>
+          <span class="activity-filter">Account</span>
+          <span class="activity-filter">Payments</span>
+        </div>
+        <button class="activity-export" onclick="window.location.href='404.html'"><i class="fas fa-download"></i> Export</button>
+      </div>
+
+      <!-- Today -->
+      <div class="timeline-date">Today</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.05s backwards;">
+          <div class="timeline-icon login"><i class="fas fa-sign-in-alt"></i></div>
+          <div class="timeline-body">
+            <p>Logged in from <strong>Chrome on Windows</strong></p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 10:30 AM</span>
+              <span class="timeline-badge login">Login</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Yesterday -->
+      <div class="timeline-date">Yesterday</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.1s backwards;">
+          <div class="timeline-icon order"><i class="fas fa-box"></i></div>
+          <div class="timeline-body">
+            <p>Placed order <strong>#GH-1042</strong> - Birthday Hamper Deluxe</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 3:45 PM</span>
+              <span class="timeline-badge order">Order</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 6, 2026 -->
+      <div class="timeline-date">July 6, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.15s backwards;">
+          <div class="timeline-icon wishlist"><i class="fas fa-heart"></i></div>
+          <div class="timeline-body">
+            <p>Added <strong>Spa Gift Set</strong> to wishlist</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 6:20 PM</span>
+              <span class="timeline-badge wishlist">Wishlist</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.2s backwards;">
+          <div class="timeline-icon login"><i class="fas fa-sign-in-alt"></i></div>
+          <div class="timeline-body">
+            <p>Logged in from <strong>Safari on iPhone</strong></p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 11:05 AM</span>
+              <span class="timeline-badge login">Login</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 3, 2026 -->
+      <div class="timeline-date">July 3, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.25s backwards;">
+          <div class="timeline-icon coupon"><i class="fas fa-tag"></i></div>
+          <div class="timeline-body">
+            <p>Redeemed coupon <strong>WELCOME20</strong> on order #GH-1041</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 2:10 PM</span>
+              <span class="timeline-badge coupon">Coupon</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.3s backwards;">
+          <div class="timeline-icon order"><i class="fas fa-box"></i></div>
+          <div class="timeline-body">
+            <p>Placed order <strong>#GH-1041</strong> - Personalized Photo Frame</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 2:08 PM</span>
+              <span class="timeline-badge order">Order</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jun 28, 2026 -->
+      <div class="timeline-date">June 28, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.35s backwards;">
+          <div class="timeline-icon profile"><i class="fas fa-user-edit"></i></div>
+          <div class="timeline-body">
+            <p>Updated profile information</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 9:15 AM</span>
+              <span class="timeline-badge profile">Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jun 25, 2026 -->
+      <div class="timeline-date">June 25, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.4s backwards;">
+          <div class="timeline-icon payment"><i class="fas fa-credit-card"></i></div>
+          <div class="timeline-body">
+            <p>Added new payment method <strong>Visa ****4521</strong></p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 4:30 PM</span>
+              <span class="timeline-badge payment">Payment</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.45s backwards;">
+          <div class="timeline-icon login"><i class="fas fa-sign-in-alt"></i></div>
+          <div class="timeline-body">
+            <p>Logged in from <strong>Firefox on Windows</strong></p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 10:00 AM</span>
+              <span class="timeline-badge login">Login</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jun 22, 2026 -->
+      <div class="timeline-date">June 22, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.5s backwards;">
+          <div class="timeline-icon security"><i class="fas fa-key"></i></div>
+          <div class="timeline-body">
+            <p>Changed account password</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 7:45 PM</span>
+              <span class="timeline-badge security">Security</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jun 20, 2026 -->
+      <div class="timeline-date">June 20, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.55s backwards;">
+          <div class="timeline-icon security"><i class="fas fa-laptop"></i></div>
+          <div class="timeline-body">
+            <p>New device login from <strong>iPhone (Safari)</strong></p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 1:20 PM</span>
+              <span class="timeline-badge security">Security</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.6s backwards;">
+          <div class="timeline-icon wishlist"><i class="fas fa-heart"></i></div>
+          <div class="timeline-body">
+            <p>Added <strong>Anniversary Rose Bouquet</strong> to wishlist</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 11:10 AM</span>
+              <span class="timeline-badge wishlist">Wishlist</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jun 18, 2026 -->
+      <div class="timeline-date">June 18, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.65s backwards;">
+          <div class="timeline-icon review"><i class="fas fa-star"></i></div>
+          <div class="timeline-body">
+            <p>Posted a review for <strong>Anniversary Rose Bouquet</strong></p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 5:55 PM</span>
+              <span class="timeline-badge review">Review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jun 15, 2026 -->
+      <div class="timeline-date">June 15, 2026</div>
+      <div class="timeline-group">
+        <div class="timeline-item" style="animation: fadeInUp 0.4s ease-out 0.7s backwards;">
+          <div class="timeline-icon settings"><i class="fas fa-cog"></i></div>
+          <div class="timeline-body">
+            <p>Changed notification preferences</p>
+            <div class="timeline-meta">
+              <span class="timeline-time"><i class="far fa-clock"></i> 8:30 AM</span>
+              <span class="timeline-badge settings">Settings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>
+    document.querySelectorAll('.activity-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.activity-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

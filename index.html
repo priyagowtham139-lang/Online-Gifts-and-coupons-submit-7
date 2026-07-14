@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Online Gifts & Coupons</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-gift"><i class="fas fa-gift"></i></div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Back to Top -->
+  <a href="#home" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="logo"><img src="assets/logo_white.webp" alt="GiftHaven" class="logo-img"></a>
+      <ul class="nav-links" id="navLinks">
+        <div class="nav-sidebar-header"><img src="assets/logo_white.webp" alt="GiftHaven"></div>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="featured.html">Featured</a></li>
+        <li><a href="coupons.html">Coupons</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-mobile-only"><button class="login-btn" id="loginBtnMobile" aria-label="Login"><i class="fas fa-user"></i> Sign In</button></li>
+        <li class="nav-mobile-only"><button class="cart-btn" id="cartBtnMobile" aria-label="Cart"><i class="fas fa-shopping-bag"></i> Cart <span class="cart-count">0</span></button></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="login-btn desktop-only" id="loginBtn" aria-label="Login"><i class="fas fa-user"></i> Sign In</button>
+        <button class="cart-btn desktop-only" id="cartBtn" aria-label="Cart">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count">0</span>
+        </button>
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+          <i class="fas fa-times"></i>
+        </div>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Hero Slideshow Section -->
+  <section id="home" class="hero">
+    <div class="hero-left">
+      <div class="hero-heading active" data-index="0">
+        <span class="hero-heading-tag">Birthday</span>
+        <h2>Birthday Special <span class="gradient-text">Gifts</span></h2>
+        <p>Celebrate every moment with perfectly curated birthday surprises for your loved ones</p>
+        <a href="categories.html#birthday" class="btn btn-primary">Explore <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-heading" data-index="1">
+        <span class="hero-heading-tag">Anniversary</span>
+        <h2>Anniversary Gift <span class="gradient-text">Surprises</span></h2>
+        <p>Romantic and thoughtful gifts to make your special day even more memorable</p>
+        <a href="categories.html#anniversary" class="btn btn-primary">Explore <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-heading" data-index="2">
+        <span class="hero-heading-tag">Festival</span>
+        <h2>Festival Gift <span class="gradient-text">Hampers</span></h2>
+        <p>Seasonal hampers filled with joy and warmth for every celebration</p>
+        <a href="categories.html#festival" class="btn btn-primary">Explore <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-heading" data-index="3">
+        <span class="hero-heading-tag">Wedding</span>
+        <h2>Wedding Gift <span class="gradient-text">Collections</span></h2>
+        <p>Elegant and timeless gifts for the most beautiful beginning</p>
+        <a href="categories.html#wedding" class="btn btn-primary">Explore <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-heading" data-index="4">
+        <span class="hero-heading-tag">Kids</span>
+        <h2>Fun Gifts for <span class="gradient-text">Kids</span></h2>
+        <p>Playful surprises that spark imagination, joy, and creativity</p>
+        <a href="categories.html#kids" class="btn btn-primary">Explore <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-slideshow-wrapper">
+        <div class="hero-slideshow">
+        <div class="hero-slide active" data-topic="birthday">
+          <div class="slide-image">
+            <img src="assets/Birthday.webp" alt="Birthday Special Gifts" class="slide-img">
+          </div>
+        </div>
+        <div class="hero-slide" data-topic="anniversary">
+          <div class="slide-image">
+            <img src="assets/anniversary%20slidee.webp" alt="Anniversary Gift Surprises" class="slide-img">
+          </div>
+        </div>
+        <div class="hero-slide" data-topic="festival">
+          <div class="slide-image">
+            <img src="assets/festival.webp" alt="Festival Gift Hampers" class="slide-img">
+          </div>
+        </div>
+        <div class="hero-slide" data-topic="wedding">
+          <div class="slide-image">
+            <img src="assets/Wedding_card.webp" alt="Wedding Gift Collections" class="slide-img">
+          </div>
+        </div>
+        <div class="hero-slide" data-topic="kids">
+          <div class="slide-image">
+            <img src="assets/kids_card.webp" alt="Fun Gifts for Kids" class="slide-img">
+          </div>
+        </div>
+        </div>
+        <div class="slide-controls">
+          <button class="slide-arrow" id="slidePrev" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
+          <div class="slide-dots" id="slideDots"></div>
+          <button class="slide-arrow" id="slideNext" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Categories</span>
+        <h2>Shop by <span class="gradient-text">Category</span></h2>
+        <p>Find the perfect gift for every occasion</p>
+      </div>
+      <div class="categories-grid">
+        <div class="category-card reveal" style="--i:1">
+          <img src="assets/Bd_card.webp" alt="">
+          <h3>Birthday</h3>
+          <p>Celebrate with special gifts</p>
+          <a href="categories.html#birthday" class="cat-link">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-card reveal" style="--i:2">
+          <img src="assets/Anniversary_card.webp" alt="">
+          <h3>Anniversary</h3>
+          <p>Romantic surprises for loved ones</p>
+          <a href="categories.html" class="cat-link">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-card reveal" style="--i:3">
+         <img src="assets/1783578104047_Festival_card.webp" alt="">
+          <h3>Festival</h3>
+          <p>Seasonal gifts & hampers</p>
+          <a href="categories.html" class="cat-link">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-card reveal" style="--i:4">
+          <img src="assets/Graduation.webp" alt="">
+          <h3>Graduation</h3>
+          <p>Celebrate achievements</p>
+          <a href="categories.html" class="cat-link">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-card reveal" style="--i:5">
+          <img src="assets/Wedding_card.webp" alt="">
+          <h3>Wedding</h3>
+          <p>Perfect wedding gifts</p>
+          <a href="categories.html" class="cat-link">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-card reveal" style="--i:6">
+         <img src="assets/kids_card.webp" alt="">
+          <h3>Kids</h3>
+          <p>Toys & fun surprises</p>
+          <a href="categories.html" class="cat-link">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Gifts -->
+  <section id="featured" class="section featured-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Featured</span>
+        <h2>Trending <span class="gradient-text">Gifts</span></h2>
+        <p>Most loved gifts picked by our community</p>
+      </div>
+      <div class="featured-grid">
+        <div class="gift-card reveal" style="--i:1">
+          <div class="gift-badge">Best Seller</div>
+          <div class="gift-img">
+            <img src="assets/Wireless_headphones.webp" alt="">
+
+          </div>
+          <div class="gift-body">
+            <h3>Wireless Headphones</h3>
+            <div class="gift-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(4.5)</span></div>
+            <p>Premium noise-cancelling headphones</p>
+            <div class="gift-footer">
+              <span class="gift-price">₹79.99</span>
+              <button class="btn-gift"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="gift-card reveal" style="--i:2">
+          <div class="gift-badge gift-badge-sale">-30%</div>
+          <div class="gift-img">
+            <img src="assets/Smartwatch.webp" alt="">
+
+          </div>
+          <div class="gift-body">
+            <h3>Smart Watch</h3>
+            <div class="gift-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(5.0)</span></div>
+            <p>Fitness & health tracker smartwatch</p>
+            <div class="gift-footer">
+              <span class="gift-price"><span class="old-price">₹199</span> ₹139.99</span>
+              <button class="btn-gift"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="gift-card reveal" style="--i:3">
+          <div class="gift-img">
+            <img src="assets/Poloroid.webp" alt="">
+
+          </div>
+          <div class="gift-body">
+            <h3>Polaroid Camera</h3>
+            <div class="gift-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(5.0)</span></div>
+            <p>Instant camera with photo prints</p>
+            <div class="gift-footer">
+              <span class="gift-price">₹89.99</span>
+              <button class="btn-gift"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="gift-card reveal" style="--i:4">
+          <div class="gift-badge gift-badge-new">New</div>
+          <div class="gift-img">
+            <img src="assets/Custom_mug.webp" alt="">
+
+          </div>
+          <div class="gift-body">
+            <h3>Custom Mug Set</h3>
+            <div class="gift-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(4.5)</span></div>
+            <p>Personalized ceramic mug collection</p>
+            <div class="gift-footer">
+              <span class="gift-price">₹24.99</span>
+              <button class="btn-gift"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="gift-card reveal" style="--i:5">
+          <div class="gift-img">
+            <img src="assets/Gaming.webp" alt="">
+
+          </div>
+          <div class="gift-body">
+            <h3>Gaming Bundle</h3>
+            <div class="gift-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(5.0)</span></div>
+            <p>Controller + 3 games + headset</p>
+            <div class="gift-footer">
+              <span class="gift-price">₹149.99</span>
+              <button class="btn-gift"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="gift-card reveal" style="--i:6">
+          <div class="gift-badge gift-badge-sale">-40%</div>
+          <div class="gift-img">
+            <img src="assets/Spa_hamper.webp" alt="">
+
+          </div>
+          <div class="gift-body">
+            <h3>Spa Hamper</h3>
+            <div class="gift-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(4.5)</span></div>
+            <p>Luxury essential oils & bath set</p>
+            <div class="gift-footer">
+              <span class="gift-price"><span class="old-price">₹99</span> ₹59.99</span>
+              <button class="btn-gift"><i class="fas fa-shopping-cart"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coupons Section -->
+  <section id="coupons" class="section coupons-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Deals</span>
+        <h2>Hot <span class="gradient-text">Coupons</span></h2>
+        <p>Grab these exclusive deals before they expire</p>
+      </div>
+      <div class="coupons-grid">
+        <div class="coupon-card reveal" style="--i:1">
+          <div class="coupon-ribbon">Popular</div>
+          <div class="coupon-left">
+            <div class="coupon-discount"><span>50%</span><small>OFF</small></div>
+          </div>
+          <div class="coupon-right">
+            <img src="assets/Electronics.webp" alt="">
+            <h3>Electronics Mega Sale</h3>
+            <p>On all gadgets & accessories</p>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="code1">TECH50</span>
+              <button onclick="copyCode('TECH50')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="72"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card reveal" style="--i:2">
+          <div class="coupon-ribbon coupon-ribbon-green">Exclusive</div>
+          <div class="coupon-left">
+            <div class="coupon-discount"><span>30%</span><small>OFF</small></div>
+          </div>
+          <div class="coupon-right">
+            <img src="assets/Fashion.webp" alt="">
+            <h3>Fashion & Apparel</h3>
+            <p>On all clothing & accessories</p>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="code2">STYLE30</span>
+              <button onclick="copyCode('STYLE30')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="48"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card reveal" style="--i:3">
+          <div class="coupon-ribbon">Top Deal</div>
+          <div class="coupon-left">
+            <div class="coupon-discount"><span>20%</span><small>OFF</small></div>
+          </div>
+          <div class="coupon-right">
+            <img src="assets/living.webp" alt="">
+            <h3>Home & Living</h3>
+            <p>Furniture, decor & kitchen</p>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="code3">HOME20</span>
+              <button onclick="copyCode('HOME20')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="96"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card reveal" style="--i:4">
+          <div class="coupon-ribbon coupon-ribbon-green">New</div>
+          <div class="coupon-left">
+            <div class="coupon-discount"><span>15%</span><small>OFF</small></div>
+          </div>
+          <div class="coupon-right">
+            <img src="assets/First_oder.webp" alt="">
+            <h3>First Order Special</h3>
+            <p>For new customers only</p>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="code4">WELCOME15</span>
+              <button onclick="copyCode('WELCOME15')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="120"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-bg"></div>
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <i class="fas fa-gift"></i>
+          <span class="stat-number-lg" data-target="15000">0</span>
+          <p>Gifts Delivered</p>
+        </div>
+        <div class="stat-card reveal">
+          <i class="fas fa-smile"></i>
+          <span class="stat-number-lg" data-target="8500">0</span>
+          <p>Happy Customers</p>
+        </div>
+        <div class="stat-card reveal">
+          <i class="fas fa-tags"></i>
+          <span class="stat-number-lg" data-target="3200">0</span>
+          <p>Coupons Claimed</p>
+        </div>
+        <div class="stat-card reveal">
+          <i class="fas fa-star"></i>
+          <span class="stat-number-lg" data-target="4.9">0</span>
+          <p>Avg. Rating</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Testimonials</span>
+        <h2>What Our <span class="gradient-text">Customers</span> Say</h2>
+      </div>
+      <div class="testimonials-slider reveal">
+        <div class="testimonial-track" id="testimonialTrack">
+          <div class="testimonial-card">
+            <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"Absolutely amazing! Found the perfect anniversary gift with a huge discount. Will definitely shop again!"</p>
+            <div class="testi-user">
+              <div class="testi-avatar"><img src="assets/Meena.webp" alt=""></div>
+              <div>
+                <h4>Meena Ramesh</h4>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"The coupon codes actually work! Saved 50% on a smartwatch. Fast delivery and great quality products."</p>
+            <div class="testi-user">
+              <div class="testi-avatar"><img src="assets/Priya.webp" alt=""></div>
+              <div>
+                <h4>Priya Gowtham</h4>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+            <p>"Gift wrapping was beautiful and the recipient loved it. Great selection of unique gifts you won't find elsewhere."</p>
+            <div class="testi-user">
+              <div class="testi-avatar"><img src="assets/sheya.webp" alt=""></div>
+              <div>
+                <h4>Sheya Arun</h4>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p>"Best gift website out there! The birthday gift I ordered arrived on time and the quality exceeded expectations."</p>
+            <div class="testi-user">
+              <div class="testi-avatar"><img src="assets/sheshanth.webp" alt="Sheshanth Reddy"></div>
+              <div>
+                <h4>Sheshanth Reddy</h4>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" onclick="moveTestimonial(-1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" onclick="moveTestimonial(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section id="contact" class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-box reveal">
+        <div class="newsletter-content">
+          <span class="section-tag">Stay Connected</span>
+          <h2>Get <span class="gradient-text">Exclusive</span> Offers</h2>
+          <p>Subscribe to receive weekly deals, new arrivals, and special coupons directly in your inbox.</p>
+          <form class="newsletter-form" id="newsletterForm" onsubmit="event.preventDefault(); window.location.href='404.html';">
+            <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="Enter your email address" required>
+              <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+            </div>
+          </form>
+        </div>
+        <div class="newsletter-graphic">
+          <i class="fas fa-envelope-open-text"></i>
+          <div class="floating-tags">
+            <span>50% OFF</span><span>FREE SHIP</span><span>NEW ARRIVALS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+<a href="#home" class="logo"><img src="assets/logo_white.webp" alt="GiftHaven" class="logo-img"></a>
+          <p>Your one-stop destination for thoughtful gifts and amazing coupon deals.</p>
+          <div class="social-links">
+            <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+            <a href="404.html"><i class="fab fa-twitter"></i></a>
+            <a href="404.html"><i class="fab fa-instagram"></i></a>
+            <a href="404.html"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">FAQ</a></li>
+            <li><a href="404.html">Shipping Info</a></li>
+            <li><a href="404.html">Returns</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Categories</h4>
+          <ul>
+            <li><a href="categories.html#birthday">Birthday</a></li>
+            <li><a href="categories.html#anniversary">Anniversary</a></li>
+            <li><a href="categories.html#wedding">Wedding</a></li>
+            <li><a href="categories.html#festival">Festival</a></li>
+            <li><a href="categories.html#kids">Kids</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Info</h4>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> Fairlands Alagapuram, Salem - 636356</li>
+            <li><i class="fas fa-phone"></i> 9976527238</li>
+            <li><i class="fas fa-envelope"></i> hello@gifthaven.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 GiftHaven. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-overlay" id="authOverlay"></div>
+    <div class="auth-box">
+      <button class="auth-close" id="authClose"><i class="fas fa-times"></i></button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-form="login">Sign In</button>
+        <button class="auth-tab" data-form="signup">Sign Up</button>
+      </div>
+
+      <!-- Login Form -->
+      <form class="auth-form active" id="loginForm">
+        <div class="auth-form-header">
+          <i class="fas fa-user-circle"></i>
+          <h3>Welcome Back</h3>
+          <p>Sign in to access your account</p>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="role-selection">
+          <label class="role-label">Login as</label>
+          <div class="role-tabs">
+            <label class="role-tab active">
+              <input type="radio" name="loginRole" value="user" checked>
+              <i class="fas fa-user"></i> User
+            </label>
+            <label class="role-tab">
+              <input type="radio" name="loginRole" value="admin">
+              <i class="fas fa-user-shield"></i> Admin
+            </label>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox"> Remember me</label>
+          <a href="404.html">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Sign In <i class="fas fa-arrow-right"></i></button>
+        <p class="auth-alt">Don't have an account? <a href="#" class="auth-switch" data-form="signup">Sign Up</a></p>
+        <a href="index.html" class="auth-home-link"><i class="fas fa-home"></i> Go Back Home</a>
+      </form>
+
+      <!-- Signup Form -->
+      <form class="auth-form" id="signupForm">
+        <div class="auth-form-header">
+          <i class="fas fa-user-plus"></i>
+          <h3>Create Account</h3>
+          <p>Join GiftHaven for exclusive deals</p>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Full name" required>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Create password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Confirm password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox" required> I agree to the Terms & Privacy Policy</label>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Create Account <i class="fas fa-user-plus"></i></button>
+        <p class="auth-alt">Already have an account? <a href="#" class="auth-switch" data-form="login">Sign In</a></p>
+        <a href="index.html" class="auth-home-link"><i class="fas fa-home"></i> Go Back Home</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMsg">Copied!</span>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - My Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>My Profile</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Manage your personal information and account settings</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+      <div class="dash-content">
+        <section>
+          <div class="dash-profile-card">
+            <div class="dash-profile-avatar">SJ</div>
+            <div class="dash-profile-info">
+              <h3>Sarah Johnson</h3>
+              <p>sarah.johnson@gmail.com</p>
+              <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+              <p class="dash-profile-member"><i class="fas fa-calendar-alt"></i> Member since January 2025</p>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2 class="dash-section-title">Personal Information</h2>
+          <div class="dash-form-grid">
+            <div class="dash-form-group">
+              <label>Full Name</label>
+              <input type="text" class="dash-input" value="Sarah Johnson" readonly>
+            </div>
+            <div class="dash-form-group">
+              <label>Email Address</label>
+              <input type="email" class="dash-input" value="sarah.johnson@gmail.com" readonly>
+            </div>
+            <div class="dash-form-group">
+              <label>Phone Number</label>
+              <input type="tel" class="dash-input" value="+91 98765 43210" readonly>
+            </div>
+            <div class="dash-form-group">
+              <label>Date of Birth</label>
+              <input type="text" class="dash-input" value="15 March 1990" readonly>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2 class="dash-section-title">Account Settings</h2>
+          <div class="dash-settings-list">
+            <div class="dash-settings-item">
+              <div class="dash-settings-label">
+                <i class="fas fa-bell"></i>
+                <span>Push Notifications</span>
+              </div>
+              <label class="dash-toggle">
+                <input type="checkbox" checked>
+                <span class="dash-toggle-slider"></span>
+              </label>
+            </div>
+            <div class="dash-settings-item">
+              <div class="dash-settings-label">
+                <i class="fas fa-globe"></i>
+                <span>Language</span>
+              </div>
+              <span class="dash-settings-value">English</span>
+            </div>
+            <div class="dash-settings-item">
+              <div class="dash-settings-label">
+                <i class="fas fa-clock"></i>
+                <span>Timezone</span>
+              </div>
+              <span class="dash-settings-value">IST (UTC +5:30)</span>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2 class="dash-section-title">Security</h2>
+          <div class="dash-settings-list">
+            <div class="dash-settings-item">
+              <div class="dash-settings-label">
+                <i class="fas fa-key"></i>
+                <span>Password Last Changed</span>
+              </div>
+              <span class="dash-settings-value">15 days ago</span>
+            </div>
+            <div class="dash-settings-item">
+              <div class="dash-settings-label">
+                <i class="fas fa-shield-alt"></i>
+                <span>Two-Factor Authentication</span>
+              </div>
+              <span class="dash-badge dash-badge-success">Enabled</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

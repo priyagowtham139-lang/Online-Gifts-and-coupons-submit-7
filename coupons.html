@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupons - GiftHaven</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/coupons.css">
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-gift"><i class="fas fa-gift"></i></div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Back to Top -->
+  <a href="#home" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="logo"><img src="assets/logo_white.webp" alt="GiftHaven" class="logo-img"></a>
+      <ul class="nav-links" id="navLinks">
+        <div class="nav-sidebar-header"><img src="assets/logo_white.webp" alt="GiftHaven"></div>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="featured.html">Featured</a></li>
+        <li><a href="coupons.html" class="active">Coupons</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-mobile-only"><button class="login-btn" id="loginBtnMobile" aria-label="Login"><i class="fas fa-user"></i> Sign In</button></li>
+        <li class="nav-mobile-only"><button class="cart-btn" id="cartBtnMobile" aria-label="Cart"><i class="fas fa-shopping-bag"></i> Cart <span class="cart-count">0</span></button></li>
+      </ul>
+      <div class="nav-actions">
+
+        
+        <button class="login-btn desktop-only" id="loginBtn" aria-label="Login"><i class="fas fa-user"></i> Sign In</button>
+        <button class="cart-btn desktop-only" id="cartBtn" aria-label="Cart">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count">0</span>
+        </button>
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Section 1: Hero Banner -->
+  <section class="coupon-hero" id="home">
+    <div class="coupon-hero-bg"></div>
+    <div class="container">
+      <div class="coupon-hero-content reveal">
+        <span class="section-tag">Exclusive Deals</span>
+        <h1>Hot <span class="gradient-text">Coupons & Deals</span></h1>
+        <p>Save big on every gift with our handpicked coupon codes. Limited-time offers updated daily!</p>
+        <div class="coupon-hero-stats">
+          <div class="ch-stat"><span class="ch-stat-num" data-target="50">0</span><span class="ch-stat-label">Active Coupons</span></div>
+          <div class="ch-stat"><span class="ch-stat-num" data-target="80">0</span><span class="ch-stat-label">% Max Discount</span></div>
+          <div class="ch-stat"><span class="ch-stat-num" data-target="12">0</span><span class="ch-stat-label">Hours Avg. Save</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: All Active Coupons -->
+  <section class="section" id="active-coupons">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Grab & Save</span>
+        <h2>All Active <span class="gradient-text">Coupons</span></h2>
+        <p>Click the copy button to grab the code and use at checkout</p>
+      </div>
+      <div class="active-coupons-grid">
+        <div class="coupon-card-lg reveal" style="--i:1">
+          <div class="coupon-ribbon">Popular</div>
+          <div class="coupon-card-lg-left">
+            <div class="cc-discount">60<span>%</span></div>
+            <div class="cc-off">OFF</div>
+          </div>
+          <div class="coupon-card-lg-body">
+            <h3>Electronics Bonanza</h3>
+            <p>On all gadgets, headphones & smart devices</p>
+            <div class="cc-meta">
+              <span><i class="fas fa-shopping-bag"></i> 230+ used</span>
+              <span><i class="fas fa-star"></i> 4.8</span>
+            </div>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="cCode1">TECH60</span>
+              <button onclick="copyCode('TECH60')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="72"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card-lg reveal" style="--i:2">
+          <div class="coupon-ribbon coupon-ribbon-green">Exclusive</div>
+          <div class="coupon-card-lg-left">
+            <div class="cc-discount">40<span>%</span></div>
+            <div class="cc-off">OFF</div>
+          </div>
+          <div class="coupon-card-lg-body">
+            <h3>Fashion Fiesta</h3>
+            <p>Clothing, accessories & footwear for all</p>
+            <div class="cc-meta">
+              <span><i class="fas fa-shopping-bag"></i> 180+ used</span>
+              <span><i class="fas fa-star"></i> 4.6</span>
+            </div>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="cCode2">STYLE40</span>
+              <button onclick="copyCode('STYLE40')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="48"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card-lg reveal" style="--i:3">
+          <div class="coupon-ribbon">Top Deal</div>
+          <div class="coupon-card-lg-left">
+            <div class="cc-discount">25<span>%</span></div>
+            <div class="cc-off">OFF</div>
+          </div>
+          <div class="coupon-card-lg-body">
+            <h3>Home & Living</h3>
+            <p>Furniture, decor, kitchen essentials</p>
+            <div class="cc-meta">
+              <span><i class="fas fa-shopping-bag"></i> 150+ used</span>
+              <span><i class="fas fa-star"></i> 4.7</span>
+            </div>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="cCode3">HOME25</span>
+              <button onclick="copyCode('HOME25')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="96"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card-lg reveal" style="--i:4">
+          <div class="coupon-ribbon coupon-ribbon-green">New</div>
+          <div class="coupon-card-lg-left">
+            <div class="cc-discount">50<span>%</span></div>
+            <div class="cc-off">OFF</div>
+          </div>
+          <div class="coupon-card-lg-body">
+            <h3>First Order Special</h3>
+            <p>For new customers on their first purchase</p>
+            <div class="cc-meta">
+              <span><i class="fas fa-shopping-bag"></i> 500+ used</span>
+              <span><i class="fas fa-star"></i> 4.9</span>
+            </div>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="cCode4">NEW50</span>
+              <button onclick="copyCode('NEW50')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="120"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card-lg reveal" style="--i:5">
+          <div class="coupon-ribbon">Hot</div>
+          <div class="coupon-card-lg-left">
+            <div class="cc-discount">35<span>%</span></div>
+            <div class="cc-off">OFF</div>
+          </div>
+          <div class="coupon-card-lg-body">
+            <h3>Gifts & Hampers</h3>
+            <p>Curated gift boxes, hampers & bundles</p>
+            <div class="cc-meta">
+              <span><i class="fas fa-shopping-bag"></i> 310+ used</span>
+              <span><i class="fas fa-star"></i> 4.8</span>
+            </div>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="cCode5">GIFT35</span>
+              <button onclick="copyCode('GIFT35')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="36"></span></div>
+          </div>
+        </div>
+        <div class="coupon-card-lg reveal" style="--i:6">
+          <div class="coupon-ribbon">Best Value</div>
+          <div class="coupon-card-lg-left">
+            <div class="cc-discount">80<span>%</span></div>
+            <div class="cc-off">OFF</div>
+          </div>
+          <div class="coupon-card-lg-body">
+            <h3>Flash Sale Extravaganza</h3>
+            <p>Limited stock, massive savings across all categories</p>
+            <div class="cc-meta">
+              <span><i class="fas fa-shopping-bag"></i> 890+ used</span>
+              <span><i class="fas fa-star"></i> 4.9</span>
+            </div>
+            <div class="coupon-code-box">
+              <span>Use Code:</span>
+              <span class="code" id="cCode6">FLASH80</span>
+              <button onclick="copyCode('FLASH80')"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="coupon-expiry"><i class="fas fa-clock"></i> Expires in <span class="coupon-timer" data-hours="12"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Coupons by Category -->
+  <section class="section cat-coupons-section" id="category-coupons">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">By Category</span>
+        <h2>Coupons by <span class="gradient-text">Category</span></h2>
+        <p>Find the perfect deal for every occasion</p>
+      </div>
+      <div class="cat-coupons-grid">
+        <div class="cat-coupon-card reveal" style="--i:1" data-category="birthday">
+          <div class="cat-coupon-icon"><i class="fas fa-birthday-cake"></i></div>
+          <h3>Birthday</h3>
+          <p>Up to 50% off on birthday gifts</p>
+          <div class="cat-coupon-code">
+            <span class="code">BDAY50</span>
+            <button onclick="copyCode('BDAY50')"><i class="fas fa-copy"></i></button>
+          </div>
+          <span class="cat-coupon-expiry">Expires in <span class="coupon-timer" data-hours="96"></span></span>
+        </div>
+        <div class="cat-coupon-card reveal" style="--i:2" data-category="anniversary">
+          <div class="cat-coupon-icon"><i class="fas fa-heart"></i></div>
+          <h3>Anniversary</h3>
+          <p>Save 40% on romantic surprises</p>
+          <div class="cat-coupon-code">
+            <span class="code">LOVE40</span>
+            <button onclick="copyCode('LOVE40')"><i class="fas fa-copy"></i></button>
+          </div>
+          <span class="cat-coupon-expiry">Expires in <span class="coupon-timer" data-hours="72"></span></span>
+        </div>
+        <div class="cat-coupon-card reveal" style="--i:3" data-category="festival">
+          <div class="cat-coupon-icon"><i class="fas fa-snowflake"></i></div>
+          <h3>Festival</h3>
+          <p>Flat 35% off on festival hampers</p>
+          <div class="cat-coupon-code">
+            <span class="code">FEST35</span>
+            <button onclick="copyCode('FEST35')"><i class="fas fa-copy"></i></button>
+          </div>
+          <span class="cat-coupon-expiry">Expires in <span class="coupon-timer" data-hours="120"></span></span>
+        </div>
+        <div class="cat-coupon-card reveal" style="--i:4" data-category="wedding">
+          <div class="cat-coupon-icon"><i class="fas fa-ring"></i></div>
+          <h3>Wedding</h3>
+          <p>Get 30% off wedding gifts</p>
+          <div class="cat-coupon-code">
+            <span class="code">WED30</span>
+            <button onclick="copyCode('WED30')"><i class="fas fa-copy"></i></button>
+          </div>
+          <span class="cat-coupon-expiry">Expires in <span class="coupon-timer" data-hours="48"></span></span>
+        </div>
+        <div class="cat-coupon-card reveal" style="--i:5" data-category="kids">
+          <div class="cat-coupon-icon"><i class="fas fa-child"></i></div>
+          <h3>Kids</h3>
+          <p>45% off on toys & learning</p>
+          <div class="cat-coupon-code">
+            <span class="code">KIDS45</span>
+            <button onclick="copyCode('KIDS45')"><i class="fas fa-copy"></i></button>
+          </div>
+          <span class="cat-coupon-expiry">Expires in <span class="coupon-timer" data-hours="60"></span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: How to Use Coupons -->
+  <section class="section how-section" id="how-to-use">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Simple Steps</span>
+        <h2>How to Use <span class="gradient-text">Coupons</span></h2>
+        <p>Redeem your coupon in just 3 easy steps</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal" style="--i:1">
+          <div class="step-number">1</div>
+          <div class="step-icon"><i class="fas fa-tag"></i></div>
+          <h3>Choose a Coupon</h3>
+          <p>Browse our collection and pick the coupon that suits your needs.</p>
+        </div>
+        <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card reveal" style="--i:2">
+          <div class="step-number">2</div>
+          <div class="step-icon"><i class="fas fa-copy"></i></div>
+          <h3>Copy the Code</h3>
+          <p>Click the copy button to save the coupon code to your clipboard.</p>
+        </div>
+        <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card reveal" style="--i:3">
+          <div class="step-number">3</div>
+          <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+          <h3>Apply at Checkout</h3>
+          <p>Paste the code in the coupon field during checkout and enjoy your savings!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Expiring Soon -->
+  <section class="section expiring-section" id="expiring-soon">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Hurry Up!</span>
+        <h2>Expiring <span class="gradient-text">Soon</span></h2>
+        <p>These deals are ending soon. Grab them before they're gone!</p>
+      </div>
+      <div class="expiring-grid">
+        <div class="expiring-card reveal" style="--i:1">
+          <div class="expiring-badge">Urgent</div>
+          <div class="expiring-discount">70% OFF</div>
+          <h3>Weekend Flash Sale</h3>
+          <p>On all premium gifts & hampers</p>
+          <div class="expiring-countdown" data-target="2026-07-16T23:59:59">
+            <div><span class="exp-days">00</span><small>Days</small></div>
+            <div><span class="exp-hours">00</span><small>Hrs</small></div>
+            <div><span class="exp-mins">00</span><small>Min</small></div>
+            <div><span class="exp-secs">00</span><small>Sec</small></div>
+          </div>
+          <div class="coupon-code-box">
+            <span>Code:</span>
+            <span class="code">WEEKEND70</span>
+            <button onclick="copyCode('WEEKEND70')"><i class="fas fa-copy"></i></button>
+          </div>
+        </div>
+        <div class="expiring-card reveal" style="--i:2">
+          <div class="expiring-badge">Limited</div>
+          <div class="expiring-discount">45% OFF</div>
+          <h3>Birthday Special</h3>
+          <p>Celebrate with curated birthday boxes</p>
+          <div class="expiring-countdown" data-target="2026-07-18T23:59:59">
+            <div><span class="exp-days">00</span><small>Days</small></div>
+            <div><span class="exp-hours">00</span><small>Hrs</small></div>
+            <div><span class="exp-mins">00</span><small>Min</small></div>
+            <div><span class="exp-secs">00</span><small>Sec</small></div>
+          </div>
+          <div class="coupon-code-box">
+            <span>Code:</span>
+            <span class="code">BDAY45</span>
+            <button onclick="copyCode('BDAY45')"><i class="fas fa-copy"></i></button>
+          </div>
+        </div>
+        <div class="expiring-card reveal" style="--i:3">
+          <div class="expiring-badge expiring-badge-hot">Hot</div>
+          <div class="expiring-discount">30% OFF</div>
+          <h3>Free Shipping Deal</h3>
+          <p>Plus 30% off on orders over ₹50</p>
+          <div class="expiring-countdown" data-target="2026-07-20T23:59:59">
+            <div><span class="exp-days">00</span><small>Days</small></div>
+            <div><span class="exp-hours">00</span><small>Hrs</small></div>
+            <div><span class="exp-mins">00</span><small>Min</small></div>
+            <div><span class="exp-secs">00</span><small>Sec</small></div>
+          </div>
+          <div class="coupon-code-box">
+            <span>Code:</span>
+            <span class="code">SHIP30</span>
+            <button onclick="copyCode('SHIP30')"><i class="fas fa-copy"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: CTA -->
+  <section class="section cta-section" id="cta">
+    <div class="cta-bg"></div>
+    <div class="container">
+      <div class="cta-box reveal">
+        <span class="section-tag">Don't Miss Out</span>
+        <h2><span class="gradient-text">Ready to Save Big</span>?</h2>
+        <p>Subscribe now and get an exclusive 20% off coupon delivered straight to your inbox!</p>
+        <form class="cta-form" id="ctaForm" onsubmit="event.preventDefault(); window.location.href='404.html';">
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Enter your email address" required>
+            <button type="submit">Get My Coupon <i class="fas fa-paper-plane"></i></button>
+          </div>
+        </form>
+        <div class="cta-trust">
+          <span><i class="fas fa-shield-alt"></i> No spam, unsubscribe anytime</span>
+          <span><i class="fas fa-check-circle"></i> 50,000+ happy subscribers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+<a href="index.html" class="logo"><img src="assets/logo_white.webp" alt="GiftHaven" class="logo-img"></a>
+          <p>Your one-stop destination for thoughtful gifts and amazing coupon deals.</p>
+          <div class="social-links">
+            <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+            <a href="404.html"><i class="fab fa-twitter"></i></a>
+            <a href="404.html"><i class="fab fa-instagram"></i></a>
+            <a href="404.html"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="404.html">FAQ</a></li>
+            <li><a href="404.html">Shipping Info</a></li>
+            <li><a href="404.html">Returns</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Categories</h4>
+          <ul>
+            <li><a href="categories.html#birthday">Birthday</a></li>
+            <li><a href="categories.html#anniversary">Anniversary</a></li>
+            <li><a href="categories.html#wedding">Wedding</a></li>
+            <li><a href="categories.html#festival">Festival</a></li>
+            <li><a href="categories.html#kids">Kids</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Info</h4>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> Fairlands Alagapuram, Salem - 636356</li>
+            <li><i class="fas fa-phone"></i> 9976527238</li>
+            <li><i class="fas fa-envelope"></i> hello@gifthaven.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 GiftHaven. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-overlay" id="authOverlay"></div>
+    <div class="auth-box">
+      <button class="auth-close" id="authClose"><i class="fas fa-times"></i></button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-form="login">Sign In</button>
+        <button class="auth-tab" data-form="signup">Sign Up</button>
+      </div>
+      <form class="auth-form active" id="loginForm">
+        <div class="auth-form-header">
+          <i class="fas fa-user-circle"></i>
+          <h3>Welcome Back</h3>
+          <p>Sign in to access your account</p>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="role-selection">
+          <label class="role-label">Login as</label>
+          <div class="role-tabs">
+            <label class="role-tab active">
+              <input type="radio" name="loginRole" value="user" checked>
+              <i class="fas fa-user"></i> User
+            </label>
+            <label class="role-tab">
+              <input type="radio" name="loginRole" value="admin">
+              <i class="fas fa-user-shield"></i> Admin
+            </label>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Sign In <i class="fas fa-arrow-right"></i></button>
+        <p class="auth-alt">Don't have an account? <a href="#" class="auth-switch" data-form="signup">Sign Up</a></p>
+        <a href="index.html" class="auth-home-link"><i class="fas fa-home"></i> Go Back Home</a>
+      </form>
+      <form class="auth-form" id="signupForm">
+        <div class="auth-form-header">
+          <i class="fas fa-user-plus"></i>
+          <h3>Create Account</h3>
+          <p>Join GiftHaven for exclusive deals</p>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Full name" required>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Create password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Confirm password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox" required> I agree to the Terms & Privacy Policy</label>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Create Account <i class="fas fa-user-plus"></i></button>
+        <p class="auth-alt">Already have an account? <a href="#" class="auth-switch" data-form="login">Sign In</a></p>
+        <a href="index.html" class="auth-home-link"><i class="fas fa-home"></i> Go Back Home</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMsg">Copied!</span>
+  </div>
+
+  <script src="js/coupons.js"></script>
+</body>
+</html>

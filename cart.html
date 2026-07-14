@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - GiftHaven</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-gift"><i class="fas fa-gift"></i></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="logo"><img src="assets/logo_white.webp" alt="GiftHaven" class="logo-img"></a>
+      <ul class="nav-links" id="navLinks">
+        <div class="nav-sidebar-header"><img src="assets/logo_white.webp" alt="GiftHaven"></div>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="featured.html">Featured</a></li>
+        <li><a href="coupons.html">Coupons</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-mobile-only"><button class="login-btn" id="loginBtnMobile" aria-label="Login"><i class="fas fa-user"></i> Sign In</button></li>
+        <li class="nav-mobile-only"><button class="cart-btn active" id="cartBtnMobile" aria-label="Cart"><i class="fas fa-shopping-bag"></i> Cart <span class="cart-count">0</span></button></li>
+      </ul>
+      <div class="nav-actions">
+
+        
+        <button class="login-btn desktop-only" id="loginBtn" aria-label="Login"><i class="fas fa-user"></i> Sign In</button>
+        <button class="cart-btn desktop-only active" id="cartBtn" aria-label="Cart">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count">0</span>
+        </button>
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Cart Page -->
+  <section class="cart-page">
+    <div class="container">
+      <div class="cart-header">
+        <a href="index.html" class="btn btn-outline back-btn"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+        <h1>Your <span class="gradient-text">Cart</span></h1>
+        <button class="btn btn-outline clear-btn" id="clearCart"><i class="fas fa-trash"></i> Clear Cart</button>
+      </div>
+
+      <div class="cart-empty" id="cartEmpty">
+        <i class="fas fa-shopping-bag"></i>
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added any gifts yet. Start exploring our collection!</p>
+        <a href="featured.html" class="btn btn-primary">Shop Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="cart-content" id="cartContent">
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-summary" id="cartSummary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+          <div class="summary-row"><span>Shipping</span><span id="shipping">Free</span></div>
+          <div class="summary-row summary-total"><span>Total</span><span id="total">$0.00</span></div>
+          <button class="btn btn-primary checkout-btn" id="checkoutBtn"><i class="fas fa-lock"></i> Checkout</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+      <a href="index.html" class="logo"><img src="assets/logo_white.webp" alt="GiftHaven" class="logo-img"></a>
+          <p>Your one-stop destination for thoughtful gifts and amazing coupon deals.</p>
+          <div class="social-links">
+            <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+            <a href="404.html"><i class="fab fa-twitter"></i></a>
+            <a href="404.html"><i class="fab fa-instagram"></i></a>
+            <a href="404.html"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="404.html">FAQ</a></li>
+            <li><a href="404.html">Shipping Info</a></li>
+            <li><a href="404.html">Returns</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Categories</h4>
+          <ul>
+            <li><a href="categories.html#birthday">Birthday</a></li>
+            <li><a href="categories.html#anniversary">Anniversary</a></li>
+            <li><a href="categories.html#wedding">Wedding</a></li>
+            <li><a href="categories.html#festival">Festival</a></li>
+            <li><a href="categories.html#kids">Kids</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Info</h4>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> Fairlands Alagapuram, Salem - 636356</li>
+            <li><i class="fas fa-phone"></i> 9976527238</li>
+            <li><i class="fas fa-envelope"></i> hello@gifthaven.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 GiftHaven. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-overlay" id="authOverlay"></div>
+    <div class="auth-box">
+      <button class="auth-close" id="authClose"><i class="fas fa-times"></i></button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-form="login">Sign In</button>
+        <button class="auth-tab" data-form="signup">Sign Up</button>
+      </div>
+      <form class="auth-form active" id="loginForm">
+        <div class="auth-form-header">
+          <i class="fas fa-user-circle"></i>
+          <h3>Welcome Back</h3>
+          <p>Sign in to access your account</p>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="role-selection">
+          <label class="role-label">Login as</label>
+          <div class="role-tabs">
+            <label class="role-tab active">
+              <input type="radio" name="loginRole" value="user" checked>
+              <i class="fas fa-user"></i> User
+            </label>
+            <label class="role-tab">
+              <input type="radio" name="loginRole" value="admin">
+              <i class="fas fa-user-shield"></i> Admin
+            </label>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Sign In <i class="fas fa-arrow-right"></i></button>
+        <p class="auth-alt">Don't have an account? <a href="#" class="auth-switch" data-form="signup">Sign Up</a></p>
+        <a href="index.html" class="auth-home-link"><i class="fas fa-home"></i> Go Back Home</a>
+      </form>
+      <form class="auth-form" id="signupForm">
+        <div class="auth-form-header">
+          <i class="fas fa-user-plus"></i>
+          <h3>Create Account</h3>
+          <p>Join GiftHaven for exclusive deals</p>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Full name" required>
+        </div>
+        <div class="auth-field">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Create password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="auth-field password-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Confirm password" required>
+          <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox" required> I agree to the Terms & Privacy Policy</label>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Create Account <i class="fas fa-user-plus"></i></button>
+        <p class="auth-alt">Already have an account? <a href="#" class="auth-switch" data-form="login">Sign In</a></p>
+        <a href="index.html" class="auth-home-link"><i class="fas fa-home"></i> Go Back Home</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMsg">Copied!</span>
+  </div>
+
+  <script src="js/cart.js"></script>
+</body>
+</html>

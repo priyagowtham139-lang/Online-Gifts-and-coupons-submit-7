@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Mobile Top Bar -->
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+
+  <!-- Overlay -->
+  <div class="dash-overlay" id="dashOverlay"></div>
+
+  <div class="dash-body">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html"><i class="fas fa-tag"></i> Coupons</a>
+
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dash-main">
+
+      <div class="dash-content-left">
+
+      <!-- Dashboard Overview -->
+      <section id="overview">
+        <div class="dash-topbar">
+          <div>
+            <h2>Admin Dashboard</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Overview of your store performance</p>
+          </div>
+          <div class="dash-topbar-right">
+            <div class="dash-avatar admin-avatar">AD</div>
+          </div>
+        </div>
+
+        <div class="dash-stats">
+          <div class="dash-stat-card">
+            <div class="stat-icon blue"><i class="fas fa-rupee-sign"></i></div>
+            <div class="stat-value">&#8377;2,84,500</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="stat-icon green"><i class="fas fa-shopping-bag"></i></div>
+            <div class="stat-value">342</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="stat-icon orange"><i class="fas fa-users"></i></div>
+            <div class="stat-value">1,248</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="stat-icon pink"><i class="fas fa-gift"></i></div>
+            <div class="stat-value">86</div>
+            <div class="stat-label">Products Listed</div>
+          </div>
+        </div>
+
+        <div class="dash-section">
+          <div class="dash-section-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+          <div class="dash-quick-link-grid">
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-plus-circle"></i> Add Product</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-box"></i> Manage Orders</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-tag"></i> Create Coupon</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-users"></i> View Users</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-chart-bar"></i> View Reports</a>
+            <a href="404.html" class="dash-quick-link"><i class="fas fa-star"></i> Manage Reviews</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Grid (2-column layout) -->
+      <div class="dash-grid-layout">
+
+        <!-- Left Column -->
+        <div class="dash-grid-col-left">
+
+          <!-- Orders Section -->
+          <section id="orders">
+            <div class="dash-section">
+              <div class="dash-section-title"><i class="fas fa-box"></i> All Orders</div>
+              <div class="order-card-list">
+                <div class="order-info-card">
+                  <div class="order-info-top">
+                    <span class="order-info-id">#GH-1042</span>
+                    <span class="dash-badge delivered">Delivered</span>
+                  </div>
+                  <div class="order-info-body">
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-user"></i> Customer</span>
+                      <span class="order-info-val">Sarah Johnson</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-gift"></i> Item</span>
+                      <span class="order-info-val">Birthday Hamper Deluxe</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-rupee-sign"></i> Amount</span>
+                      <span class="order-info-val">&#8377;1,299</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-calendar"></i> Date</span>
+                      <span class="order-info-val">Jul 8, 2026</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="order-info-card">
+                  <div class="order-info-top">
+                    <span class="order-info-id">#GH-1041</span>
+                    <span class="dash-badge processing">Processing</span>
+                  </div>
+                  <div class="order-info-body">
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-user"></i> Customer</span>
+                      <span class="order-info-val">Mike Wilson</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-gift"></i> Item</span>
+                      <span class="order-info-val">Anniversary Gift Box</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-rupee-sign"></i> Amount</span>
+                      <span class="order-info-val">&#8377;1,899</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-calendar"></i> Date</span>
+                      <span class="order-info-val">Jul 7, 2026</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="order-info-card">
+                  <div class="order-info-top">
+                    <span class="order-info-id">#GH-1040</span>
+                    <span class="dash-badge processing">Shipped</span>
+                  </div>
+                  <div class="order-info-body">
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-user"></i> Customer</span>
+                      <span class="order-info-val">Emily Davis</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-gift"></i> Item</span>
+                      <span class="order-info-val">Personalized Photo Frame</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-rupee-sign"></i> Amount</span>
+                      <span class="order-info-val">&#8377;599</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-calendar"></i> Date</span>
+                      <span class="order-info-val">Jul 7, 2026</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="order-info-card">
+                  <div class="order-info-top">
+                    <span class="order-info-id">#GH-1039</span>
+                    <span class="dash-badge pending">Pending</span>
+                  </div>
+                  <div class="order-info-body">
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-user"></i> Customer</span>
+                      <span class="order-info-val">James Brown</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-gift"></i> Item</span>
+                      <span class="order-info-val">Wedding Gift Set Premium</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-rupee-sign"></i> Amount</span>
+                      <span class="order-info-val">&#8377;3,499</span>
+                    </div>
+                    <div class="order-info-row">
+                      <span class="order-info-label"><i class="fas fa-calendar"></i> Date</span>
+                      <span class="order-info-val">Jul 6, 2026</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Users Section -->
+          <section id="users">
+            <div class="dash-section">
+              <div class="dash-section-title"><i class="fas fa-users"></i> Registered Users</div>
+              <div class="user-card-list">
+                <div class="user-info-card">
+                  <div class="user-info-avatar" style="background: #6366f1;">SJ</div>
+                  <div class="user-info-details">
+                    <div class="user-info-name">Sarah Johnson</div>
+                    <div class="user-info-email">sarah.johnson@gmail.com</div>
+                    <div class="user-info-meta">
+                      <span class="dash-badge user-role">User</span>
+                      <span class="dash-badge active-status">Active</span>
+                      <span class="user-info-joined"><i class="fas fa-calendar-alt"></i> Jan 2025</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="user-info-card">
+                  <div class="user-info-avatar" style="background: #10b981;">MW</div>
+                  <div class="user-info-details">
+                    <div class="user-info-name">Mike Wilson</div>
+                    <div class="user-info-email">mike.wilson@gmail.com</div>
+                    <div class="user-info-meta">
+                      <span class="dash-badge user-role">User</span>
+                      <span class="dash-badge active-status">Active</span>
+                      <span class="user-info-joined"><i class="fas fa-calendar-alt"></i> Feb 2025</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="user-info-card">
+                  <div class="user-info-avatar" style="background: #f59e0b;">ED</div>
+                  <div class="user-info-details">
+                    <div class="user-info-name">Emily Davis</div>
+                    <div class="user-info-email">emily.davis@gmail.com</div>
+                    <div class="user-info-meta">
+                      <span class="dash-badge user-role">User</span>
+                      <span class="dash-badge active-status">Active</span>
+                      <span class="user-info-joined"><i class="fas fa-calendar-alt"></i> Mar 2025</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="user-info-card">
+                  <div class="user-info-avatar" style="background: #ef4444;">AU</div>
+                  <div class="user-info-details">
+                    <div class="user-info-name">Admin User</div>
+                    <div class="user-info-email">admin@gifthaven.com</div>
+                    <div class="user-info-meta">
+                      <span class="dash-badge admin">Admin</span>
+                      <span class="dash-badge active-status">Active</span>
+                      <span class="user-info-joined"><i class="fas fa-calendar-alt"></i> Jan 2025</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stock Overview Section -->
+          <section id="stock">
+            <div class="dash-section">
+              <div class="dash-section-title"><i class="fas fa-box"></i> Stock Overview</div>
+              <div class="stock-list">
+                <div class="stock-item">
+                  <div class="stock-item-info">
+                    <div class="stock-item-name">Birthday Hamper Deluxe</div>
+                    <div class="stock-item-cat">Birthday</div>
+                  </div>
+                  <div class="stock-item-right">
+                    <span class="stock-item-price">&#8377;1,299</span>
+                    <span class="stock-item-qty"><span class="stock-qty-dot in-stock"></span> 45</span>
+                    <span class="dash-badge delivered">In Stock</span>
+                  </div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-item-info">
+                    <div class="stock-item-name">Anniversary Rose Bouquet</div>
+                    <div class="stock-item-cat">Anniversary</div>
+                  </div>
+                  <div class="stock-item-right">
+                    <span class="stock-item-price">&#8377;899</span>
+                    <span class="stock-item-qty"><span class="stock-qty-dot low-stock"></span> 12</span>
+                    <span class="dash-badge pending">Low Stock</span>
+                  </div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-item-info">
+                    <div class="stock-item-name">Diamond Earrings</div>
+                    <div class="stock-item-cat">Jewelry</div>
+                  </div>
+                  <div class="stock-item-right">
+                    <span class="stock-item-price">&#8377;4,999</span>
+                    <span class="stock-item-qty"><span class="stock-qty-dot out-of-stock"></span> 0</span>
+                    <span class="dash-badge cancelled">Out of Stock</span>
+                  </div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-item-info">
+                    <div class="stock-item-name">Spa Gift Set</div>
+                    <div class="stock-item-cat">Wellness</div>
+                  </div>
+                  <div class="stock-item-right">
+                    <span class="stock-item-price">&#8377;1,199</span>
+                    <span class="stock-item-qty"><span class="stock-qty-dot in-stock"></span> 28</span>
+                    <span class="dash-badge delivered">In Stock</span>
+                  </div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-item-info">
+                    <div class="stock-item-name">Personalized Photo Frame</div>
+                    <div class="stock-item-cat">Personalized</div>
+                  </div>
+                  <div class="stock-item-right">
+                    <span class="stock-item-price">&#8377;599</span>
+                    <span class="stock-item-qty"><span class="stock-qty-dot in-stock"></span> 67</span>
+                    <span class="dash-badge delivered">In Stock</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Active Coupons Section -->
+          <section id="coupons">
+            <div class="dash-section">
+              <div class="dash-section-title"><i class="fas fa-tag"></i> Active Coupons</div>
+              <div class="coupon-card-list">
+                <div class="coupon-card">
+                  <div class="coupon-card-left">
+                    <div class="coupon-card-code">WELCOME20</div>
+                    <div class="coupon-card-discount">20% Off</div>
+                  </div>
+                  <div class="coupon-card-right">
+                    <div class="coupon-card-used"><span class="coupon-used-count">89</span> / 200</div>
+                    <div class="coupon-card-expires"><i class="fas fa-clock"></i> Aug 31, 2026</div>
+                    <span class="dash-badge delivered">Active</span>
+                  </div>
+                </div>
+                <div class="coupon-card">
+                  <div class="coupon-card-left">
+                    <div class="coupon-card-code">FESTIVE15</div>
+                    <div class="coupon-card-discount">15% Off</div>
+                  </div>
+                  <div class="coupon-card-right">
+                    <div class="coupon-card-used"><span class="coupon-used-count">156</span> / 300</div>
+                    <div class="coupon-card-expires"><i class="fas fa-clock"></i> Jul 31, 2026</div>
+                    <span class="dash-badge delivered">Active</span>
+                  </div>
+                </div>
+                <div class="coupon-card">
+                  <div class="coupon-card-left">
+                    <div class="coupon-card-code">FREESHIP</div>
+                    <div class="coupon-card-discount">Free Shipping</div>
+                  </div>
+                  <div class="coupon-card-right">
+                    <div class="coupon-card-used"><span class="coupon-used-count">234</span> / 500</div>
+                    <div class="coupon-card-expires"><i class="fas fa-clock"></i> Jul 15, 2026</div>
+                    <span class="dash-badge pending">Expiring Soon</span>
+                  </div>
+                </div>
+                <div class="coupon-card">
+                  <div class="coupon-card-left">
+                    <div class="coupon-card-code">VIP50</div>
+                    <div class="coupon-card-discount">50% Off</div>
+                  </div>
+                  <div class="coupon-card-right">
+                    <div class="coupon-card-used"><span class="coupon-used-count">12</span> / 50</div>
+                    <div class="coupon-card-expires"><i class="fas fa-clock"></i> Sep 30, 2026</div>
+                    <span class="dash-badge delivered">Active</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Reports Section -->
+          <section id="reports">
+            <div class="dash-section">
+              <div class="dash-section-title"><i class="fas fa-file-alt"></i> Sales Reports</div>
+              <div class="report-card-list">
+                <div class="report-card">
+                  <div class="report-card-period">Jul 2026</div>
+                  <div class="report-card-stats">
+                    <div class="report-stat">
+                      <span class="report-stat-label">Orders</span>
+                      <span class="report-stat-value">342</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Revenue</span>
+                      <span class="report-stat-value">&#8377;2,84,500</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Returns</span>
+                      <span class="report-stat-value">12</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Net</span>
+                      <span class="report-stat-value net">&#8377;2,78,200</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="report-card">
+                  <div class="report-card-period">Jun 2026</div>
+                  <div class="report-card-stats">
+                    <div class="report-stat">
+                      <span class="report-stat-label">Orders</span>
+                      <span class="report-stat-value">298</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Revenue</span>
+                      <span class="report-stat-value">&#8377;2,45,300</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Returns</span>
+                      <span class="report-stat-value">8</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Net</span>
+                      <span class="report-stat-value net">&#8377;2,41,100</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="report-card">
+                  <div class="report-card-period">May 2026</div>
+                  <div class="report-card-stats">
+                    <div class="report-stat">
+                      <span class="report-stat-label">Orders</span>
+                      <span class="report-stat-value">276</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Revenue</span>
+                      <span class="report-stat-value">&#8377;2,22,800</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Returns</span>
+                      <span class="report-stat-value">15</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Net</span>
+                      <span class="report-stat-value net">&#8377;2,15,600</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="report-card">
+                  <div class="report-card-period">Apr 2026</div>
+                  <div class="report-card-stats">
+                    <div class="report-stat">
+                      <span class="report-stat-label">Orders</span>
+                      <span class="report-stat-value">245</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Revenue</span>
+                      <span class="report-stat-value">&#8377;1,98,500</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Returns</span>
+                      <span class="report-stat-value">10</span>
+                    </div>
+                    <div class="report-stat">
+                      <span class="report-stat-label">Net</span>
+                      <span class="report-stat-value net">&#8377;1,93,200</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Gift Categories Section -->
+          <section id="categories">
+            <div class="dash-section">
+              <div class="dash-section-title"><i class="fas fa-layer-group"></i> Gift Categories</div>
+              <div class="category-list">
+                <div class="category-item">
+                  <div class="category-item-icon" style="background: rgba(99,102,241,0.15); color: #6366f1;"><i class="fas fa-birthday-cake"></i></div>
+                  <div class="category-item-info">
+                    <div class="category-item-name">Birthday</div>
+                    <div class="category-item-numbers">24 Products &middot; 156 Orders</div>
+                  </div>
+                  <div class="category-item-revenue">
+                    <span class="category-rev-label">Revenue</span>
+                    <span class="category-rev-value">&#8377;1,25,000</span>
+                  </div>
+                  <span class="dash-badge delivered">Active</span>
+                </div>
+                <div class="category-item">
+                  <div class="category-item-icon" style="background: rgba(236,72,153,0.15); color: #ec4899;"><i class="fas fa-heart"></i></div>
+                  <div class="category-item-info">
+                    <div class="category-item-name">Anniversary</div>
+                    <div class="category-item-numbers">18 Products &middot; 89 Orders</div>
+                  </div>
+                  <div class="category-item-revenue">
+                    <span class="category-rev-label">Revenue</span>
+                    <span class="category-rev-value">&#8377;98,500</span>
+                  </div>
+                  <span class="dash-badge delivered">Active</span>
+                </div>
+                <div class="category-item">
+                  <div class="category-item-icon" style="background: rgba(245,158,11,0.15); color: #f59e0b;"><i class="fas fa-ring"></i></div>
+                  <div class="category-item-info">
+                    <div class="category-item-name">Wedding</div>
+                    <div class="category-item-numbers">15 Products &middot; 42 Orders</div>
+                  </div>
+                  <div class="category-item-revenue">
+                    <span class="category-rev-label">Revenue</span>
+                    <span class="category-rev-value">&#8377;85,000</span>
+                  </div>
+                  <span class="dash-badge delivered">Active</span>
+                </div>
+                <div class="category-item">
+                  <div class="category-item-icon" style="background: rgba(16,185,129,0.15); color: #10b981;"><i class="fas fa-calendar-alt"></i></div>
+                  <div class="category-item-info">
+                    <div class="category-item-name">Festival</div>
+                    <div class="category-item-numbers">12 Products &middot; 34 Orders</div>
+                  </div>
+                  <div class="category-item-revenue">
+                    <span class="category-rev-label">Revenue</span>
+                    <span class="category-rev-value">&#8377;56,000</span>
+                  </div>
+                  <span class="dash-badge delivered">Active</span>
+                </div>
+                <div class="category-item">
+                  <div class="category-item-icon" style="background: rgba(139,92,246,0.15); color: #8b5cf6;"><i class="fas fa-child"></i></div>
+                  <div class="category-item-info">
+                    <div class="category-item-name">Kids</div>
+                    <div class="category-item-numbers">17 Products &middot; 21 Orders</div>
+                  </div>
+                  <div class="category-item-revenue">
+                    <span class="category-rev-label">Revenue</span>
+                    <span class="category-rev-value">&#8377;32,000</span>
+                  </div>
+                  <span class="dash-badge delivered">Active</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>

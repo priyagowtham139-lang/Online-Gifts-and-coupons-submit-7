@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Sales Reports</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .report-cards { display: none; }
+    .report-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .report-card-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.05); transform: translateY(-2px); }
+    .report-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .report-card-top-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .report-card-period { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .report-card-growth { font-size: 0.82rem; font-weight: 600; }
+    .report-card-mid { padding: 16px 20px; }
+    .report-card-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .report-card-label { font-size: 0.72rem; color: var(--text-muted); min-width: 80px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .report-card-value { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+    @media (max-width: 768px) {
+      .dash-table-container { display: none; }
+      .report-cards { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html"><i class="fas fa-tag"></i> Coupons</a>
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html" class="active"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1>Sales Reports</h1>
+        <div class="dash-topbar-right">
+          <div class="dash-avatar admin-avatar">AD</div>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-grid">
+          <div class="dash-card" style="border-left: 4px solid #3b82f6;">
+            <div class="dash-card-icon"><i class="fas fa-rupee-sign" style="color: #3b82f6;"></i></div>
+            <h3>Total Revenue</h3>
+            <p class="dash-card-stat">₹14,56,000</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #22c55e;">
+            <div class="dash-card-icon"><i class="fas fa-shopping-cart" style="color: #22c55e;"></i></div>
+            <h3>Total Orders</h3>
+            <p class="dash-card-stat">1,847</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #8b5cf6;">
+            <div class="dash-card-icon"><i class="fas fa-receipt" style="color: #8b5cf6;"></i></div>
+            <h3>Avg Order</h3>
+            <p class="dash-card-stat">₹789</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #f97316;">
+            <div class="dash-card-icon"><i class="fas fa-undo" style="color: #f97316;"></i></div>
+            <h3>Return Rate</h3>
+            <p class="dash-card-stat">3.2%</p>
+          </div>
+        </div>
+        <div class="dash-table-container">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Period</th>
+                <th>Orders</th>
+                <th>Revenue</th>
+                <th>Returns</th>
+                <th>Net</th>
+                <th>Growth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jul 2026</td>
+                <td>342</td>
+                <td>₹2,84,500</td>
+                <td>12</td>
+                <td>₹2,78,200</td>
+                <td><span style="color:#22c55e;">+16%</span></td>
+              </tr>
+              <tr>
+                <td>Jun 2026</td>
+                <td>298</td>
+                <td>₹2,45,300</td>
+                <td>8</td>
+                <td>₹2,41,100</td>
+                <td><span style="color:#22c55e;">+10%</span></td>
+              </tr>
+              <tr>
+                <td>May 2026</td>
+                <td>276</td>
+                <td>₹2,22,800</td>
+                <td>15</td>
+                <td>₹2,15,600</td>
+                <td><span style="color:#22c55e;">+12%</span></td>
+              </tr>
+              <tr>
+                <td>Apr 2026</td>
+                <td>245</td>
+                <td>₹1,98,500</td>
+                <td>10</td>
+                <td>₹1,93,200</td>
+                <td><span style="color:#22c55e;">+8%</span></td>
+              </tr>
+              <tr>
+                <td>Mar 2026</td>
+                <td>218</td>
+                <td>₹1,83,200</td>
+                <td>7</td>
+                <td>₹1,79,800</td>
+                <td><span style="color:#22c55e;">+5%</span></td>
+              </tr>
+              <tr>
+                <td>Feb 2026</td>
+                <td>192</td>
+                <td>₹1,67,800</td>
+                <td>5</td>
+                <td>₹1,64,900</td>
+                <td><span style="color:#ef4444;">-2%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Mobile Cards -->
+        <div class="report-cards">
+          <div class="report-card-item">
+            <div class="report-card-top">
+              <div class="report-card-top-left">
+                <span class="report-card-period">Jul 2026</span>
+              </div>
+              <span class="report-card-growth" style="color:#22c55e;">+16%</span>
+            </div>
+            <div class="report-card-mid">
+              <div class="report-card-row"><span class="report-card-label">Orders</span><span class="report-card-value">342</span></div>
+              <div class="report-card-row"><span class="report-card-label">Revenue</span><span class="report-card-value">₹2,84,500</span></div>
+              <div class="report-card-row"><span class="report-card-label">Returns</span><span class="report-card-value">12</span></div>
+              <div class="report-card-row"><span class="report-card-label">Net</span><span class="report-card-value">₹2,78,200</span></div>
+            </div>
+          </div>
+          <div class="report-card-item">
+            <div class="report-card-top">
+              <div class="report-card-top-left">
+                <span class="report-card-period">Jun 2026</span>
+              </div>
+              <span class="report-card-growth" style="color:#22c55e;">+10%</span>
+            </div>
+            <div class="report-card-mid">
+              <div class="report-card-row"><span class="report-card-label">Orders</span><span class="report-card-value">298</span></div>
+              <div class="report-card-row"><span class="report-card-label">Revenue</span><span class="report-card-value">₹2,45,300</span></div>
+              <div class="report-card-row"><span class="report-card-label">Returns</span><span class="report-card-value">8</span></div>
+              <div class="report-card-row"><span class="report-card-label">Net</span><span class="report-card-value">₹2,41,100</span></div>
+            </div>
+          </div>
+          <div class="report-card-item">
+            <div class="report-card-top">
+              <div class="report-card-top-left">
+                <span class="report-card-period">May 2026</span>
+              </div>
+              <span class="report-card-growth" style="color:#22c55e;">+12%</span>
+            </div>
+            <div class="report-card-mid">
+              <div class="report-card-row"><span class="report-card-label">Orders</span><span class="report-card-value">276</span></div>
+              <div class="report-card-row"><span class="report-card-label">Revenue</span><span class="report-card-value">₹2,22,800</span></div>
+              <div class="report-card-row"><span class="report-card-label">Returns</span><span class="report-card-value">15</span></div>
+              <div class="report-card-row"><span class="report-card-label">Net</span><span class="report-card-value">₹2,15,600</span></div>
+            </div>
+          </div>
+          <div class="report-card-item">
+            <div class="report-card-top">
+              <div class="report-card-top-left">
+                <span class="report-card-period">Apr 2026</span>
+              </div>
+              <span class="report-card-growth" style="color:#22c55e;">+8%</span>
+            </div>
+            <div class="report-card-mid">
+              <div class="report-card-row"><span class="report-card-label">Orders</span><span class="report-card-value">245</span></div>
+              <div class="report-card-row"><span class="report-card-label">Revenue</span><span class="report-card-value">₹1,98,500</span></div>
+              <div class="report-card-row"><span class="report-card-label">Returns</span><span class="report-card-value">10</span></div>
+              <div class="report-card-row"><span class="report-card-label">Net</span><span class="report-card-value">₹1,93,200</span></div>
+            </div>
+          </div>
+          <div class="report-card-item">
+            <div class="report-card-top">
+              <div class="report-card-top-left">
+                <span class="report-card-period">Mar 2026</span>
+              </div>
+              <span class="report-card-growth" style="color:#22c55e;">+5%</span>
+            </div>
+            <div class="report-card-mid">
+              <div class="report-card-row"><span class="report-card-label">Orders</span><span class="report-card-value">218</span></div>
+              <div class="report-card-row"><span class="report-card-label">Revenue</span><span class="report-card-value">₹1,83,200</span></div>
+              <div class="report-card-row"><span class="report-card-label">Returns</span><span class="report-card-value">7</span></div>
+              <div class="report-card-row"><span class="report-card-label">Net</span><span class="report-card-value">₹1,79,800</span></div>
+            </div>
+          </div>
+          <div class="report-card-item">
+            <div class="report-card-top">
+              <div class="report-card-top-left">
+                <span class="report-card-period">Feb 2026</span>
+              </div>
+              <span class="report-card-growth" style="color:#ef4444;">-2%</span>
+            </div>
+            <div class="report-card-mid">
+              <div class="report-card-row"><span class="report-card-label">Orders</span><span class="report-card-value">192</span></div>
+              <div class="report-card-row"><span class="report-card-label">Revenue</span><span class="report-card-value">₹1,67,800</span></div>
+              <div class="report-card-row"><span class="report-card-label">Returns</span><span class="report-card-value">5</span></div>
+              <div class="report-card-row"><span class="report-card-label">Net</span><span class="report-card-value">₹1,64,900</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

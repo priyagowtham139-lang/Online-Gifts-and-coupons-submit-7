@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Notifications</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .notif-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .notif-tab {
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .notif-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .notif-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .notif-tab .tab-count {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      margin-left: 4px;
+    }
+    .notif-tab.active .tab-count { background: rgba(255,255,255,0.3); }
+    .notif-card {
+      display: flex;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .notif-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+      transition: background 0.2s;
+    }
+    .notif-card:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .notif-card.unread { border-left: none; }
+    .notif-card.unread::before { background: var(--primary); }
+    .notif-card.unread .notif-dot {
+      width: 8px; height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      animation: pulse 2s infinite;
+    }
+    .notif-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .notif-icon.order { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .notif-icon.promo { background: rgba(236,72,153,0.1); color: #ec4899; }
+    .notif-icon.shipping { background: rgba(16,185,129,0.1); color: #10b981; }
+    .notif-icon.security { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .notif-icon.system { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .notif-icon.wishlist { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+    .notif-body { flex: 1; }
+    .notif-body p { font-size: 0.9rem; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+    .notif-body p strong { font-weight: 600; }
+    .notif-meta { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+    .notif-time { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
+    .notif-category {
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .notif-category.order { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .notif-category.promo { background: rgba(236,72,153,0.1); color: #ec4899; }
+    .notif-category.shipping { background: rgba(16,185,129,0.1); color: #10b981; }
+    .notif-category.security { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .notif-category.system { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .notif-actions { display: flex; gap: 8px; margin-top: 10px; }
+    .notif-action-btn {
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      background: var(--bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .notif-action-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .notif-action-btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .notif-action-btn.primary:hover { background: var(--primary-dark); }
+    .notif-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .notif-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .notif-summary-item {
+      padding: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .notif-summary-item:hover { border-color: var(--primary); }
+    .notif-summary-item .count { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+    .notif-summary-item .label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .notif-empty { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+    .notif-empty i { font-size: 3rem; margin-bottom: 12px; opacity: 0.3; }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html" class="active"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Notifications</h2>
+          <p>Stay updated with your orders and account</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="notif-summary">
+        <div class="notif-summary-item">
+          <div class="count">8</div>
+          <div class="label">Total</div>
+        </div>
+        <div class="notif-summary-item">
+          <div class="count" style="color: var(--primary);">2</div>
+          <div class="label">Unread</div>
+        </div>
+        <div class="notif-summary-item">
+          <div class="count" style="color: #10b981;">3</div>
+          <div class="label">Orders</div>
+        </div>
+        <div class="notif-summary-item">
+          <div class="count" style="color: #ec4899;">2</div>
+          <div class="label">Promos</div>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="notif-header">
+        <div class="notif-tabs">
+          <span class="notif-tab active">All <span class="tab-count">8</span></span>
+          <span class="notif-tab">Orders <span class="tab-count">3</span></span>
+          <span class="notif-tab">Promotions <span class="tab-count">2</span></span>
+          <span class="notif-tab">Shipping <span class="tab-count">1</span></span>
+          <span class="notif-tab">Security <span class="tab-count">1</span></span>
+          <span class="notif-tab">System <span class="tab-count">1</span></span>
+        </div>
+        <a href="404.html" class="dash-mark-read"><i class="fas fa-check-double"></i> Mark all as read</a>
+      </div>
+
+      <!-- Notification Cards -->
+      <div class="notif-card unread" style="animation: fadeInUp 0.4s ease-out 0.05s backwards;">
+        <div class="notif-dot"></div>
+        <div class="notif-icon order"><i class="fas fa-check-circle"></i></div>
+        <div class="notif-body">
+          <p>Your order <strong>#GH-1042</strong> has been delivered successfully. Thank you for shopping with us!</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 2 hours ago</span>
+            <span class="notif-category order">Order</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">View Order</button>
+            <button class="notif-action-btn" onclick="window.location.href='404.html'">Rate & Review</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card unread" style="animation: fadeInUp 0.4s ease-out 0.1s backwards;">
+        <div class="notif-dot"></div>
+        <div class="notif-icon promo"><i class="fas fa-tag"></i></div>
+        <div class="notif-body">
+          <p>New coupon <strong>FESTIVE15</strong> is now available! Get 15% off on all festival gifts. Limited time only.</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 1 day ago</span>
+            <span class="notif-category promo">Promo</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">Shop Now</button>
+            <button class="notif-action-btn" onclick="window.location.href='404.html'">Copy Code</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card" style="animation: fadeInUp 0.4s ease-out 0.15s backwards;">
+        <div class="notif-icon shipping"><i class="fas fa-truck"></i></div>
+        <div class="notif-body">
+          <p>Your order <strong>#GH-1038</strong> is on the way! Expected delivery by <strong>Jul 10, 2026</strong>.</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 2 days ago</span>
+            <span class="notif-category shipping">Shipping</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">Track Order</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card" style="animation: fadeInUp 0.4s ease-out 0.2s backwards;">
+        <div class="notif-icon system"><i class="fas fa-birthday-cake"></i></div>
+        <div class="notif-body">
+          <p>Your birthday is coming up! Explore our special <strong>Birthday Collection</strong> with exclusive discounts.</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 5 days ago</span>
+            <span class="notif-category system">System</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">Explore Gifts</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card" style="animation: fadeInUp 0.4s ease-out 0.25s backwards;">
+        <div class="notif-icon promo"><i class="fas fa-bolt"></i></div>
+        <div class="notif-body">
+          <p>Flash Sale: Up to <strong>50% off</strong> on select gift items. Hurry, the sale ends tonight!</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 1 week ago</span>
+            <span class="notif-category promo">Promo</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">Shop Sale</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card" style="animation: fadeInUp 0.4s ease-out 0.3s backwards;">
+        <div class="notif-icon system"><i class="fas fa-star"></i></div>
+        <div class="notif-body">
+          <p>New arrivals are here! Discover the latest gift collection curated just for you.</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 1 week ago</span>
+            <span class="notif-category system">System</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">View New Arrivals</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card" style="animation: fadeInUp 0.4s ease-out 0.35s backwards;">
+        <div class="notif-icon wishlist"><i class="fas fa-heart"></i></div>
+        <div class="notif-body">
+          <p>Price drop alert! <strong>Spa Gift Set</strong> in your wishlist is now available at <strong>&#8377;1,199</strong>.</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 2 weeks ago</span>
+            <span class="notif-category order">Wishlist</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">Buy Now</button>
+            <button class="notif-action-btn" onclick="window.location.href='404.html'">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-card" style="animation: fadeInUp 0.4s ease-out 0.4s backwards;">
+        <div class="notif-icon security"><i class="fas fa-shield-alt"></i></div>
+        <div class="notif-body">
+          <p>Account security alert: New login detected from <strong>Chrome on Windows</strong>. If this wasn't you, please secure your account.</p>
+          <div class="notif-meta">
+            <span class="notif-time"><i class="far fa-clock"></i> 2 weeks ago</span>
+            <span class="notif-category security">Security</span>
+          </div>
+          <div class="notif-actions">
+            <button class="notif-action-btn primary" onclick="window.location.href='404.html'">Review Activity</button>
+            <button class="notif-action-btn" onclick="window.location.href='404.html'">Change Password</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>
+    document.querySelectorAll('.notif-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.notif-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

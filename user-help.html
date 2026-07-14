@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Help Center</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html" class="active"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>Help Center</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Find answers to your questions and get support</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+      <div class="dash-content">
+        <section>
+          <div class="dash-help-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search help articles, FAQs, and topics..." class="dash-help-search-input">
+          </div>
+        </section>
+        <section>
+          <h2 class="dash-section-title">Frequently Asked Questions</h2>
+          <div class="dash-help-grid">
+            <div class="dash-help-card">
+              <div class="dash-help-icon"><i class="fas fa-shipping-fast"></i></div>
+              <h3>Shipping Policy</h3>
+              <p>Free shipping on all orders above ₹999. Standard delivery takes 3-5 business days. Express shipping available at ₹99 for next-day delivery within select cities.</p>
+            </div>
+            <div class="dash-help-card">
+              <div class="dash-help-icon"><i class="fas fa-undo-alt"></i></div>
+              <h3>Returns & Refunds</h3>
+              <p>Easy returns within 7 days of delivery. Items must be unused and in original packaging. Refunds are processed within 5-7 business days after inspection.</p>
+            </div>
+            <div class="dash-help-card">
+              <div class="dash-help-icon"><i class="fas fa-credit-card"></i></div>
+              <h3>Payment Methods</h3>
+              <p>We accept all major credit/debit cards, UPI, net banking, and digital wallets. All transactions are encrypted with 256-bit SSL security.</p>
+            </div>
+            <div class="dash-help-card">
+              <div class="dash-help-icon"><i class="fas fa-search-location"></i></div>
+              <h3>Order Tracking</h3>
+              <p>Track your order in real-time from the My Orders section. You will receive SMS and email updates at every stage of delivery.</p>
+            </div>
+            <div class="dash-help-card">
+              <div class="dash-help-icon"><i class="fas fa-gift"></i></div>
+              <h3>Gift Wrapping</h3>
+              <p>Add premium gift wrapping for just ₹49 per item. Choose from festive, elegant, or minimalist themes with a personalised message card.</p>
+            </div>
+            <div class="dash-help-card">
+              <div class="dash-help-icon"><i class="fas fa-headset"></i></div>
+              <h3>Contact Support</h3>
+              <p>Our support team is available Mon-Sat, 9 AM to 9 PM. Reach us at +91 99765 27238 or email hello@gifthaven.com for prompt assistance.</p>
+            </div>
+          </div>
+        </section>
+        <section class="dash-contact-section">
+          <h2 class="dash-section-title">Still Need Help?</h2>
+          <div class="dash-contact-options">
+            <div class="dash-contact-card">
+              <i class="fas fa-phone-alt"></i>
+              <h4>Call Us</h4>
+              <p>+91 99765 27238</p>
+              <span>Mon-Sat, 9AM-9PM</span>
+            </div>
+            <div class="dash-contact-card">
+              <i class="fas fa-envelope"></i>
+              <h4>Email Us</h4>
+              <p>hello@gifthaven.com</p>
+              <span>We reply within 24 hours</span>
+            </div>
+            <div class="dash-contact-card">
+              <i class="fas fa-comment-dots"></i>
+              <h4>Live Chat</h4>
+              <p>Start a conversation</p>
+              <span>Average response 2 minutes</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

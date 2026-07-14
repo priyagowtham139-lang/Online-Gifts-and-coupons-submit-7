@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Gift Categories</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .cat-cards { display: none; }
+    .cat-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .cat-card-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.05); transform: translateY(-2px); }
+    .cat-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cat-card-top-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .cat-card-name { font-weight: 700; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .cat-card-status {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cat-card-mid { padding: 16px 20px; }
+    .cat-card-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .cat-card-label { font-size: 0.72rem; color: var(--text-muted); min-width: 80px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .cat-card-value { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+    @media (max-width: 768px) {
+      .dash-table-container { display: none; }
+      .cat-cards { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html"><i class="fas fa-tag"></i> Coupons</a>
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html" class="active"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1>Gift Categories</h1>
+        <div class="dash-topbar-right">
+          <div class="dash-avatar admin-avatar">AD</div>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-grid">
+          <div class="dash-card" style="border-left: 4px solid #3b82f6;">
+            <div class="dash-card-icon"><i class="fas fa-layer-group" style="color: #3b82f6;"></i></div>
+            <h3>Total Categories</h3>
+            <p class="dash-card-stat">8</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #22c55e;">
+            <div class="dash-card-icon"><i class="fas fa-boxes" style="color: #22c55e;"></i></div>
+            <h3>Total Products</h3>
+            <p class="dash-card-stat">86</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #f59e0b;">
+            <div class="dash-card-icon"><i class="fas fa-crown" style="color: #f59e0b;"></i></div>
+            <h3>Most Popular</h3>
+            <p class="dash-card-stat">Birthday</p>
+          </div>
+        </div>
+        <div class="dash-table-container">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Products</th>
+                <th>Orders</th>
+                <th>Revenue</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="category-icon" style="background-color: #3b82f6;"><i class="fas fa-birthday-cake"></i></span> Birthday</td>
+                <td>24</td>
+                <td>156</td>
+                <td>₹1,25,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #ec4899;"><i class="fas fa-heart"></i></span> Anniversary</td>
+                <td>18</td>
+                <td>89</td>
+                <td>₹98,500</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #f97316;"><i class="fas fa-ring"></i></span> Wedding</td>
+                <td>15</td>
+                <td>42</td>
+                <td>₹85,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #22c55e;"><i class="fas fa-calendar-alt"></i></span> Festival</td>
+                <td>12</td>
+                <td>34</td>
+                <td>₹56,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #a855f7;"><i class="fas fa-child"></i></span> Kids</td>
+                <td>17</td>
+                <td>21</td>
+                <td>₹32,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #6b7280;"><i class="fas fa-building"></i></span> Corporate</td>
+                <td>10</td>
+                <td>18</td>
+                <td>₹45,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #f43f5e;"><i class="fas fa-dove"></i></span> Religious</td>
+                <td>8</td>
+                <td>15</td>
+                <td>₹28,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td><span class="category-icon" style="background-color: #14b8a6;"><i class="fas fa-seedling"></i></span> Seasonal</td>
+                <td>6</td>
+                <td>9</td>
+                <td>₹18,000</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Mobile Cards -->
+        <div class="cat-cards">
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #3b82f6;"><i class="fas fa-birthday-cake"></i></span> Birthday</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">24</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">156</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹1,25,000</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #ec4899;"><i class="fas fa-heart"></i></span> Anniversary</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">18</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">89</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹98,500</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #f97316;"><i class="fas fa-ring"></i></span> Wedding</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">15</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">42</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹85,000</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #22c55e;"><i class="fas fa-calendar-alt"></i></span> Festival</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">12</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">34</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹56,000</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #a855f7;"><i class="fas fa-child"></i></span> Kids</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">17</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">21</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹32,000</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #6b7280;"><i class="fas fa-building"></i></span> Corporate</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">10</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">18</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹45,000</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #f43f5e;"><i class="fas fa-dove"></i></span> Religious</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">8</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">15</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹28,000</span></div>
+            </div>
+          </div>
+          <div class="cat-card-item">
+            <div class="cat-card-top">
+              <div class="cat-card-top-left">
+                <span class="cat-card-name"><span class="category-icon" style="background-color: #14b8a6;"><i class="fas fa-seedling"></i></span> Seasonal</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="cat-card-mid">
+              <div class="cat-card-row"><span class="cat-card-label">Products</span><span class="cat-card-value">6</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Orders</span><span class="cat-card-value">9</span></div>
+              <div class="cat-card-row"><span class="cat-card-label">Revenue</span><span class="cat-card-value">₹18,000</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

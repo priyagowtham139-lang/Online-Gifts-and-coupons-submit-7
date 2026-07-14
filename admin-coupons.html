@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - Admin Coupons</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .coupon-cards { display: none; }
+    .coupon-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .coupon-card-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.05); transform: translateY(-2px); }
+    .coupon-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .coupon-card-top-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .coupon-card-code { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .coupon-card-expires { font-size: 0.78rem; color: var(--text-muted); }
+    .coupon-card-status {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .coupon-card-mid { padding: 16px 20px; }
+    .coupon-card-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .coupon-card-label { font-size: 0.72rem; color: var(--text-muted); min-width: 80px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .coupon-card-value { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+    @media (max-width: 768px) {
+      .dash-table-container { display: none; }
+      .coupon-cards { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven Admin" class="dash-logo">
+        <p>Admin Panel</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="admin-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="admin-orders.html"><i class="fas fa-box"></i> Orders <span class="badge">8</span></a>
+        <a href="admin-products.html"><i class="fas fa-gift"></i> Products</a>
+        <a href="admin-users.html"><i class="fas fa-users"></i> Users <span class="badge">42</span></a>
+        <a href="admin-coupons.html" class="active"><i class="fas fa-tag"></i> Coupons</a>
+        <div class="dash-nav-label">Analytics</div>
+        <a href="admin-revenue.html"><i class="fas fa-chart-line"></i> Revenue</a>
+        <a href="admin-reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin-reviews.html"><i class="fas fa-star"></i> Reviews</a>
+        <div class="dash-nav-label">Management</div>
+        <a href="admin-categories.html"><i class="fas fa-layer-group"></i> Categories</a>
+        <a href="admin-shipping.html"><i class="fas fa-truck"></i> Shipping</a>
+        <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1>Active Coupons</h1>
+        <div class="dash-topbar-right">
+          <div class="dash-avatar admin-avatar">AD</div>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-grid">
+          <div class="dash-card" style="border-left: 4px solid #3b82f6;">
+            <div class="dash-card-icon"><i class="fas fa-tags" style="color: #3b82f6;"></i></div>
+            <h3>Active Coupons</h3>
+            <p class="dash-card-stat">6</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #22c55e;">
+            <div class="dash-card-icon"><i class="fas fa-shopping-bag" style="color: #22c55e;"></i></div>
+            <h3>Total Uses</h3>
+            <p class="dash-card-stat">1,245</p>
+          </div>
+          <div class="dash-card" style="border-left: 4px solid #8b5cf6;">
+            <div class="dash-card-icon"><i class="fas fa-rupee-sign" style="color: #8b5cf6;"></i></div>
+            <h3>Total Savings</h3>
+            <p class="dash-card-stat">₹45,600</p>
+          </div>
+        </div>
+        <div class="dash-table-container">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Discount</th>
+                <th>Min Order</th>
+                <th>Used</th>
+                <th>Expires</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>WELCOME20</td>
+                <td>20% Off</td>
+                <td>₹499</td>
+                <td>89/200</td>
+                <td>Aug 31 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>FESTIVE15</td>
+                <td>15% Off</td>
+                <td>₹299</td>
+                <td>156/300</td>
+                <td>Jul 31 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>FREESHIP</td>
+                <td>Free Shipping</td>
+                <td>₹999</td>
+                <td>234/500</td>
+                <td>Jul 15 2026</td>
+                <td><span class="status expiring">Expiring Soon</span></td>
+              </tr>
+              <tr>
+                <td>VIP50</td>
+                <td>50% Off</td>
+                <td>₹2,499</td>
+                <td>12/50</td>
+                <td>Sep 30 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>MEGA30</td>
+                <td>30% Off</td>
+                <td>₹1,499</td>
+                <td>45/100</td>
+                <td>Aug 15 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>BULK20</td>
+                <td>20% Off</td>
+                <td>₹3,000</td>
+                <td>18/75</td>
+                <td>Sep 10 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>FIRST100</td>
+                <td>₹100 Off</td>
+                <td>₹399</td>
+                <td>67/200</td>
+                <td>Dec 31 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+              <tr>
+                <td>SEASON40</td>
+                <td>40% Off</td>
+                <td>₹2,000</td>
+                <td>8/30</td>
+                <td>Aug 5 2026</td>
+                <td><span class="status active">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Mobile Cards -->
+        <div class="coupon-cards">
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">WELCOME20</span>
+                <span class="coupon-card-expires">Aug 31, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">20% Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹499</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">89/200</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">FESTIVE15</span>
+                <span class="coupon-card-expires">Jul 31, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">15% Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹299</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">156/300</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">FREESHIP</span>
+                <span class="coupon-card-expires">Jul 15, 2026</span>
+              </div>
+              <span class="status expiring">Expiring Soon</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">Free Shipping</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹999</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">234/500</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">VIP50</span>
+                <span class="coupon-card-expires">Sep 30, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">50% Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹2,499</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">12/50</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">MEGA30</span>
+                <span class="coupon-card-expires">Aug 15, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">30% Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹1,499</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">45/100</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">BULK20</span>
+                <span class="coupon-card-expires">Sep 10, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">20% Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹3,000</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">18/75</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">FIRST100</span>
+                <span class="coupon-card-expires">Dec 31, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">₹100 Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹399</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">67/200</span></div>
+            </div>
+          </div>
+          <div class="coupon-card-item">
+            <div class="coupon-card-top">
+              <div class="coupon-card-top-left">
+                <span class="coupon-card-code">SEASON40</span>
+                <span class="coupon-card-expires">Aug 5, 2026</span>
+              </div>
+              <span class="status active">Active</span>
+            </div>
+            <div class="coupon-card-mid">
+              <div class="coupon-card-row"><span class="coupon-card-label">Discount</span><span class="coupon-card-value">40% Off</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Min Order</span><span class="coupon-card-value">₹2,000</span></div>
+              <div class="coupon-card-row"><span class="coupon-card-label">Used</span><span class="coupon-card-value">8/30</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

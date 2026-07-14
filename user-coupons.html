@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - My Coupons</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .coupon-hero { background: linear-gradient(135deg, var(--primary), #8b5cf6); border-radius: 16px; padding: 32px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; animation: fadeInUp 0.4s ease-out; position: relative; overflow: hidden; }
+    .coupon-hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+    .coupon-hero::after { content: ''; position: absolute; bottom: -60%; left: 10%; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+    .coupon-hero-text { z-index: 1; }
+    .coupon-hero-text h2 { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .coupon-hero-text p { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+    .coupon-hero-btn { z-index: 1; padding: 10px 24px; background: #fff; color: var(--primary); border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .coupon-hero-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+    .coupon-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .coupon-stat { padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; text-align: center; transition: all 0.25s; }
+    .coupon-stat:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.04); }
+    .coupon-stat-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; margin: 0 auto 10px; }
+    .coupon-stat .count { font-size: 1.6rem; font-weight: 800; color: var(--text); line-height: 1; }
+    .coupon-stat .label { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+    .coupon-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+    .coupon-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .coupon-tab { padding: 7px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); background: var(--bg); cursor: pointer; transition: all 0.2s; }
+    .coupon-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .coupon-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .coupon-search { padding: 8px 14px 8px 36px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.82rem; background: var(--bg); color: var(--text); width: 220px; transition: border-color 0.2s; }
+    .coupon-search:focus { border-color: var(--primary); outline: none; }
+    .coupon-search-wrap { position: relative; }
+    .coupon-search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem; }
+    .coupon-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+    .coupon-item { display: flex; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.3s; animation: fadeInUp 0.4s ease-out backwards; }
+    .coupon-item:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+    .coupon-item-left { width: 140px; min-width: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; position: relative; gap: 4px; }
+    .coupon-item-left::after { content: ''; position: absolute; right: 0; top: 16px; bottom: 16px; border-right: 1px dashed var(--border); }
+    .coupon-item-value { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .coupon-item-type { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+    .coupon-item-right { flex: 1; padding: 18px 22px; display: flex; flex-direction: column; justify-content: center; }
+    .coupon-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .coupon-item-title { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .coupon-item-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .coupon-item-badge.active { background: rgba(16,185,129,0.1); color: #10b981; }
+    .coupon-item-badge.expiring { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .coupon-item-badge.expired { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .coupon-item-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
+    .coupon-item-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .coupon-item-meta span { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+    .coupon-item-meta i { font-size: 0.65rem; }
+    .coupon-item-action { display: flex; align-items: center; padding: 0 20px; }
+    .coupon-use-btn { padding: 8px 20px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; white-space: nowrap; }
+    .coupon-use-btn.active { background: var(--primary); color: #fff; }
+    .coupon-use-btn.active:hover { opacity: 0.9; transform: scale(1.03); }
+    .coupon-use-btn.expiring { background: #f59e0b; color: #fff; }
+    .coupon-use-btn.expiring:hover { opacity: 0.9; }
+    .coupon-use-btn.expired { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); cursor: not-allowed; }
+    .coupon-how { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; animation: fadeInUp 0.4s ease-out 0.2s backwards; }
+    .coupon-how h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .coupon-how h3 i { color: var(--primary); }
+    .coupon-how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .coupon-how-step { display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: var(--bg); border-radius: 10px; }
+    .coupon-how-num { width: 32px; height: 32px; min-width: 32px; border-radius: 8px; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; }
+    .coupon-how-step p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .coupon-how-step strong { color: var(--text); }
+    @media (max-width: 768px) {
+      .coupon-hero { padding: 24px; text-align: center; justify-content: center; }
+      .coupon-stats { grid-template-columns: repeat(2, 1fr); }
+      .coupon-item { flex-direction: column; }
+      .coupon-item-left { width: 100%; min-width: 100%; flex-direction: row; padding: 16px; gap: 8px; }
+      .coupon-item-left::after { display: none; }
+      .coupon-item-action { padding: 0 16px 16px; border-top: 1px dashed var(--border); justify-content: center; }
+      .coupon-toolbar { flex-direction: column; align-items: stretch; }
+      .coupon-search { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html" class="active"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <div>
+          <h2>My Coupons</h2>
+          <p>Manage your discount codes and offers</p>
+        </div>
+        <div class="dash-avatar">SJ</div>
+      </div>
+      <div class="coupon-hero">
+        <div class="coupon-hero-text">
+          <h2>You have 4 active coupons!</h2>
+          <p>Use them before they expire and save big on your next gift.</p>
+        </div>
+        <button class="coupon-hero-btn" onclick="window.location.href='404.html'">Browse More Deals <i class="fas fa-arrow-right" style="margin-left:6px;"></i></button>
+      </div>
+      <div class="coupon-stats">
+        <div class="coupon-stat" style="animation: fadeInUp 0.4s ease-out 0.05s backwards;">
+          <div class="coupon-stat-icon" style="background: rgba(16,185,129,0.1); color: #10b981;"><i class="fas fa-check-circle"></i></div>
+          <div class="count">4</div>
+          <div class="label">Active Coupons</div>
+        </div>
+        <div class="coupon-stat" style="animation: fadeInUp 0.4s ease-out 0.1s backwards;">
+          <div class="coupon-stat-icon" style="background: rgba(245,158,11,0.1); color: #f59e0b;"><i class="fas fa-clock"></i></div>
+          <div class="count">1</div>
+          <div class="label">Expiring Soon</div>
+        </div>
+        <div class="coupon-stat" style="animation: fadeInUp 0.4s ease-out 0.15s backwards;">
+          <div class="coupon-stat-icon" style="background: rgba(239,68,68,0.1); color: #ef4444;"><i class="fas fa-ban"></i></div>
+          <div class="count">1</div>
+          <div class="label">Expired</div>
+        </div>
+        <div class="coupon-stat" style="animation: fadeInUp 0.4s ease-out 0.2s backwards;">
+          <div class="coupon-stat-icon" style="background: rgba(99,102,241,0.1); color: #6366f1;"><i class="fas fa-rupee-sign"></i></div>
+          <div class="count">&#8377;850</div>
+          <div class="label">Total Saved</div>
+        </div>
+      </div>
+      <div class="coupon-toolbar">
+        <div class="coupon-tabs">
+          <span class="coupon-tab active">All (6)</span>
+          <span class="coupon-tab">Active (4)</span>
+          <span class="coupon-tab">Expiring (1)</span>
+          <span class="coupon-tab">Expired (1)</span>
+        </div>
+        <div class="coupon-search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" class="coupon-search" placeholder="Search coupons...">
+        </div>
+      </div>
+      <div class="coupon-list">
+        <div class="coupon-item" style="animation-delay: 0.05s;">
+          <div class="coupon-item-left" style="background: rgba(99,102,241,0.06); color: #6366f1;">
+            <div class="coupon-item-value">20%</div>
+            <div class="coupon-item-type">OFF</div>
+          </div>
+          <div class="coupon-item-right">
+            <div class="coupon-item-header">
+              <span class="coupon-item-title">Welcome Discount</span>
+              <span class="coupon-item-badge active">Active</span>
+            </div>
+            <div class="coupon-item-desc">Get 20% off on your first order. Valid on all categories with minimum purchase.</div>
+            <div class="coupon-item-meta">
+              <span><i class="fas fa-shopping-cart"></i> Min. &#8377;499</span>
+              <span><i class="fas fa-redo"></i> 2 uses left</span>
+              <span><i class="fas fa-calendar"></i> All categories</span>
+            </div>
+          </div>
+          <div class="coupon-item-action">
+            <button class="coupon-use-btn active" onclick="window.location.href='404.html'">Use Now</button>
+          </div>
+        </div>
+        <div class="coupon-item" style="animation-delay: 0.1s;">
+          <div class="coupon-item-left" style="background: rgba(236,72,153,0.06); color: #ec4899;">
+            <div class="coupon-item-value">15%</div>
+            <div class="coupon-item-type">OFF</div>
+          </div>
+          <div class="coupon-item-right">
+            <div class="coupon-item-header">
+              <span class="coupon-item-title">Festival Special</span>
+              <span class="coupon-item-badge active">Active</span>
+            </div>
+            <div class="coupon-item-desc">Exclusive 15% discount on all festival gift hampers and decorations.</div>
+            <div class="coupon-item-meta">
+              <span><i class="fas fa-shopping-cart"></i> Min. &#8377;799</span>
+              <span><i class="fas fa-redo"></i> Single use</span>
+              <span><i class="fas fa-calendar"></i> Festival gifts</span>
+            </div>
+          </div>
+          <div class="coupon-item-action">
+            <button class="coupon-use-btn active" onclick="window.location.href='404.html'">Use Now</button>
+          </div>
+        </div>
+        <div class="coupon-item" style="animation-delay: 0.15s;">
+          <div class="coupon-item-left" style="background: rgba(245,158,11,0.06); color: #f59e0b;">
+            <div class="coupon-item-value">FREE</div>
+            <div class="coupon-item-type">SHIPPING</div>
+          </div>
+          <div class="coupon-item-right">
+            <div class="coupon-item-header">
+              <span class="coupon-item-title">Free Delivery</span>
+              <span class="coupon-item-badge expiring">Expiring Soon</span>
+            </div>
+            <div class="coupon-item-desc">Enjoy free shipping on any order. No minimum purchase required.</div>
+            <div class="coupon-item-meta">
+              <span><i class="fas fa-shopping-cart"></i> No min. order</span>
+              <span><i class="fas fa-redo"></i> Single use</span>
+              <span><i class="fas fa-clock"></i> Expires Jul 15</span>
+            </div>
+          </div>
+          <div class="coupon-item-action">
+            <button class="coupon-use-btn expiring" onclick="window.location.href='404.html'">Use Now</button>
+          </div>
+        </div>
+        <div class="coupon-item" style="animation-delay: 0.2s;">
+          <div class="coupon-item-left" style="background: rgba(16,185,129,0.06); color: #10b981;">
+            <div class="coupon-item-value">10%</div>
+            <div class="coupon-item-type">OFF</div>
+          </div>
+          <div class="coupon-item-right">
+            <div class="coupon-item-header">
+              <span class="coupon-item-title">Summer Collection</span>
+              <span class="coupon-item-badge active">Active</span>
+            </div>
+            <div class="coupon-item-desc">Save 10% on summer-themed gifts and accessories. Multiple uses allowed.</div>
+            <div class="coupon-item-meta">
+              <span><i class="fas fa-shopping-cart"></i> Min. &#8377;299</span>
+              <span><i class="fas fa-redo"></i> 3 uses left</span>
+              <span><i class="fas fa-calendar"></i> Summer items</span>
+            </div>
+          </div>
+          <div class="coupon-item-action">
+            <button class="coupon-use-btn active" onclick="window.location.href='404.html'">Use Now</button>
+          </div>
+        </div>
+        <div class="coupon-item" style="animation-delay: 0.25s;">
+          <div class="coupon-item-left" style="background: rgba(139,92,246,0.06); color: #8b5cf6;">
+            <div class="coupon-item-value">25%</div>
+            <div class="coupon-item-type">OFF</div>
+          </div>
+          <div class="coupon-item-right">
+            <div class="coupon-item-header">
+              <span class="coupon-item-title">Loyalty Reward</span>
+              <span class="coupon-item-badge active">Active</span>
+            </div>
+            <div class="coupon-item-desc">Exclusive 25% off for loyalty members. Valid on orders above &#8377;999.</div>
+            <div class="coupon-item-meta">
+              <span><i class="fas fa-shopping-cart"></i> Min. &#8377;999</span>
+              <span><i class="fas fa-redo"></i> Single use</span>
+              <span><i class="fas fa-calendar"></i> All items</span>
+            </div>
+          </div>
+          <div class="coupon-item-action">
+            <button class="coupon-use-btn active" onclick="window.location.href='404.html'">Use Now</button>
+          </div>
+        </div>
+        <div class="coupon-item" style="animation-delay: 0.3s; opacity: 0.55;">
+          <div class="coupon-item-left" style="background: rgba(107,114,128,0.06); color: #6b7280;">
+            <div class="coupon-item-value">&#8377;50</div>
+            <div class="coupon-item-type">OFF</div>
+          </div>
+          <div class="coupon-item-right">
+            <div class="coupon-item-header">
+              <span class="coupon-item-title">Birthday Special</span>
+              <span class="coupon-item-badge expired">Expired</span>
+            </div>
+            <div class="coupon-item-desc">Flat &#8377;50 off on birthday gift orders. Expired on Jun 30, 2026.</div>
+            <div class="coupon-item-meta">
+              <span><i class="fas fa-shopping-cart"></i> Min. &#8377;399</span>
+              <span><i class="fas fa-redo"></i> Single use</span>
+              <span><i class="fas fa-calendar"></i> Birthday gifts</span>
+            </div>
+          </div>
+          <div class="coupon-item-action">
+            <button class="coupon-use-btn expired" disabled>Expired</button>
+          </div>
+        </div>
+      </div>
+      <div class="coupon-how">
+        <h3><i class="fas fa-lightbulb"></i> How Coupons Work</h3>
+        <div class="coupon-how-steps">
+          <div class="coupon-how-step">
+            <div class="coupon-how-num">1</div>
+            <p><strong>Browse deals</strong> on our coupons page and collect codes you like.</p>
+          </div>
+          <div class="coupon-how-step">
+            <div class="coupon-how-num">2</div>
+            <p><strong>Shop gifts</strong> and add items to your cart from any category.</p>
+          </div>
+          <div class="coupon-how-step">
+            <div class="coupon-how-num">3</div>
+            <p><strong>Apply coupon</strong> at checkout to instantly reduce your total.</p>
+          </div>
+          <div class="coupon-how-step">
+            <div class="coupon-how-num">4</div>
+            <p><strong>Save more</strong> by stacking eligible coupons on bigger orders.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+  <script>
+    document.querySelectorAll('.coupon-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.coupon-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

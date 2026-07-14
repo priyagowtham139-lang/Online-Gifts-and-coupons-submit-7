@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - My Addresses</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html" class="active"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1>My Addresses</h1>
+        <div class="dash-avatar">SJ</div>
+      </div>
+      <div class="dash-content">
+        <section>
+          <h2 class="dash-section-title">Saved Addresses</h2>
+          <div class="dash-address-grid">
+            <div class="dash-address-card">
+              <div class="dash-address-card-header">
+                <span class="dash-address-label dash-label-blue">Home</span>
+                <span class="dash-badge dash-badge-primary">Default</span>
+              </div>
+              <div class="dash-address-details">
+                <p><strong>Sarah Johnson</strong></p>
+                <p>123 Maple Street, Fairlands</p>
+                <p>Salem - 636356</p>
+                <p>Tamil Nadu</p>
+                <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+              </div>
+              <div class="dash-address-actions">
+                <a href="404.html" class="dash-address-edit"><i class="fas fa-edit"></i> Edit</a>
+                <a href="404.html" class="dash-address-delete"><i class="fas fa-trash-alt"></i> Delete</a>
+              </div>
+            </div>
+            <div class="dash-address-card">
+              <div class="dash-address-card-header">
+                <span class="dash-address-label dash-label-muted">Office</span>
+                <a href="404.html" class="dash-set-default">Set as Default</a>
+              </div>
+              <div class="dash-address-details">
+                <p><strong>Sarah Johnson</strong></p>
+                <p>456 Tech Park, GST Road</p>
+                <p>Salem - 636030</p>
+                <p>Tamil Nadu</p>
+                <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+              </div>
+              <div class="dash-address-actions">
+                <a href="404.html" class="dash-address-edit"><i class="fas fa-edit"></i> Edit</a>
+                <a href="404.html" class="dash-address-delete"><i class="fas fa-trash-alt"></i> Delete</a>
+              </div>
+            </div>
+            <div class="dash-address-card">
+              <div class="dash-address-card-header">
+                <span class="dash-address-label dash-label-muted">Parents</span>
+                <a href="404.html" class="dash-set-default">Set as Default</a>
+              </div>
+              <div class="dash-address-details">
+                <p><strong>Sarah Johnson</strong></p>
+                <p>78 Gandhi Nagar</p>
+                <p>Madurai - 625001</p>
+                <p>Tamil Nadu</p>
+                <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+              </div>
+              <div class="dash-address-actions">
+                <a href="404.html" class="dash-address-edit"><i class="fas fa-edit"></i> Edit</a>
+                <a href="404.html" class="dash-address-delete"><i class="fas fa-trash-alt"></i> Delete</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

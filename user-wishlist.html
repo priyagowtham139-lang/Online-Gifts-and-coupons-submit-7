@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftHaven - My Wishlist</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dash-hamburger" id="dashTopbar">
+    <button class="dash-hamburger-btn" id="dashHamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+  </div>
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-body">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/logo_white.webp" alt="GiftHaven" class="dash-logo">
+        <p>User Dashboard</p>
+      </div>
+      <nav class="dash-nav">
+        <div class="dash-nav-label">Main</div>
+        <a href="user-dashboard.html"><i class="fas fa-th-large"></i> Overview</a>
+        <a href="user-orders.html"><i class="fas fa-box"></i> My Orders <span class="badge">3</span></a>
+        <a href="user-wishlist.html" class="active"><i class="fas fa-heart"></i> Wishlist <span class="badge">5</span></a>
+        <a href="user-coupons.html"><i class="fas fa-tag"></i> My Coupons</a>
+        <div class="dash-nav-label">Account</div>
+        <a href="user-profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="user-addresses.html"><i class="fas fa-map-marker-alt"></i> Addresses</a>
+        <a href="user-payments.html"><i class="fas fa-credit-card"></i> Payment Methods</a>
+        <a href="user-notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">2</span></a>
+        <div class="dash-nav-label">Support</div>
+        <a href="user-help.html"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="user-activity.html"><i class="fas fa-history"></i> Activity Log</a>
+        <a href="#" id="dashLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <h1>My Wishlist</h1>
+        <div class="dash-avatar">SJ</div>
+      </div>
+      <div class="dash-content">
+        <section>
+          <div class="dash-section-header">
+            <h2 class="dash-section-title">My Wishlist</h2>
+            <span class="dash-badge">5 items saved</span>
+          </div>
+          <div class="dash-wishlist-grid">
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-gift"></i></div>
+              <h4>Spa Gift Set</h4>
+              <p class="dash-wishlist-price">₹1,199</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-cookie-bite"></i></div>
+              <h4>Gourmet Chocolate Box</h4>
+              <p class="dash-wishlist-price">₹599</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-gem"></i></div>
+              <h4>Diamond Earrings</h4>
+              <p class="dash-wishlist-price">₹4,999</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-volume-up"></i></div>
+              <h4>Bluetooth Speaker</h4>
+              <p class="dash-wishlist-price">₹1,899</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-book-open"></i></div>
+              <h4>Book Collection</h4>
+              <p class="dash-wishlist-price">₹799</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-wine-bottle"></i></div>
+              <h4>Ceramic Vase</h4>
+              <p class="dash-wishlist-price">₹1,499</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+            <div class="dash-wishlist-item">
+              <div class="dash-wishlist-icon"><i class="fas fa-fire-alt"></i></div>
+              <h4>Scented Candle Set</h4>
+              <p class="dash-wishlist-price">₹449</p>
+              <a href="404.html" class="dash-wishlist-remove">Remove</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
